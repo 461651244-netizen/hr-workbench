@@ -173,13 +173,23 @@ tr:hover td{background:#f8fafc}
 <div class="wc" data-c="km"><div class="wl">最低工资·二类</div><div class="wv" style="color:var(--ok)">1,920<span style="font-size:12px"> 元/月</span></div><div class="ws">19元/时·东川及其他县</div></div>
 <div class="wc" data-c="yx"><div class="wl">最低工资·二类</div><div class="wv" style="color:var(--ok)">1,920<span style="font-size:12px"> 元/月</span></div><div class="ws">19元/时·红塔/江川/澄江</div></div>
 <div class="wc" data-c="yx"><div class="wl">最低工资·三类</div><div class="wv" style="color:var(--ok)">1,770<span style="font-size:12px"> 元/月</span></div><div class="ws">18元/时·其余6县</div></div>
-<div class="wc g"><div class="wl">非私营单位年均</div><div class="wv" style="color:var(--pri-d)">113,558<span style="font-size:12px"> 元</span></div><div class="ws">约9,463元/月</div></div>
-<div class="wc g"><div class="wl">私营单位年均</div><div class="wv" style="color:var(--pri-d)">55,363<span style="font-size:12px"> 元</span></div><div class="ws">约4,614元/月</div></div>
-</div></div>
+<div class="wc g" data-c="km"><div class="wl">昆明·非私营年均</div><div class="wv" style="color:var(--pri-d)">126,383<span style="font-size:12px"> 元</span></div><div class="ws">约10,532元/月·2024年</div></div>
+<div class="wc g" data-c="km"><div class="wl">昆明·私营年均</div><div class="wv" style="color:var(--pri-d)">60,573<span style="font-size:12px"> 元</span></div><div class="ws">约5,048元/月·2024年</div></div>
+<div class="wc g" data-c="yx"><div class="wl">全省·非私营年均</div><div class="wv" style="color:var(--pri-d)">113,558<span style="font-size:12px"> 元</span></div><div class="ws">约9,463元/月·2025年公布</div></div>
+<div class="wc g" data-c="yx"><div class="wl">全省·私营年均</div><div class="wv" style="color:var(--pri-d)">55,363<span style="font-size:12px"> 元</span></div><div class="ws">约4,614元/月·2025年公布</div></div>
+</div>
+<div class="note info"><b>说明：</b>社保缴费基数执行<b>全省统一</b>标准（基准7,263元/月），但各州市实际平均工资有差异。昆明工资水平高于全省平均，玉溪接近全省均值。<b>最低工资依据：</b>云人社发〔2024〕调整标准</div></div>
 
 <div class="sec"><div class="calc"><div class="calc-t">&#129518; 五险一金缴费计算器</div>
 <div class="calc-in"><label>月工资：</label><input type="number" id="ins-sal" placeholder="如 6000"><button class="btn" onclick="calcIns()">计算</button></div>
 <div id="ins-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>社会保险法</h4><p>《中华人民共和国社会保险法》<br>主席令第25号（2010年通过，2018年修正）<br>涵盖养老、医疗、工伤、失业、生育五险</p></div>
+<div class="sc-card"><h4>住房公积金管理条例</h4><p>国务院令第262号（1999年发布，2019年第二次修订）<br>缴存比例5%~12%</p></div>
+<div class="sc-card"><h4>云南省社保基数通知</h4><p>2025年度全省统一缴费基数基准7,263元/月<br>依据云南省全口径城镇单位就业人员月平均工资确定</p></div>
+</div></div>
 </div>
 
 <!-- ========== 经济补偿 ========== -->
@@ -205,6 +215,13 @@ tr:hover td{background:#f8fafc}
 <select id="sev-type"><option value="n">N（合法解除）</option><option value="n1">N+1（未提前通知）</option><option value="2n">2N（违法解除）</option></select>
 <button class="btn" onclick="calcSev()">计算</button></div>
 <div id="sev-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>劳动合同法 第47条</h4><p>经济补偿按工作年限，每满1年支付1个月工资<br>主席令第65号（2007年通过，2012年修正）</p></div>
+<div class="sc-card"><h4>劳动合同法 第87条</h4><p>违法解除的，按第47条标准的二倍支付赔偿金（2N）</p></div>
+<div class="sc-card"><h4>劳动合同法实施条例</h4><p>国务院令第535号（2008年）<br>第27条：月工资按应得工资计算，含奖金、津贴等</p></div>
+</div></div>
 </div>
 
 <!-- ========== 高温补贴 ========== -->
@@ -219,8 +236,14 @@ tr:hover td{background:#f8fafc}
 <tr><td style="text-align:left">日最高温37~40°C</td><td>全天室外≤6小时，12:00~15:00不得作业</td></tr>
 <tr><td style="text-align:left">日最高温35~37°C</td><td>换班轮休，缩短连续作业时间</td></tr>
 </tbody></table>
-<div class="note info"><b>法律依据：</b>《防暑降温措施管理办法》（安监总安健〔2012〕89号）</div></div>
-</div>
+<div class="note info"><b>法律依据：</b>《防暑降温措施管理办法》（安监总安健〔2012〕89号，2012年6月施行）| 高温津贴纳入工资总额，不计入最低工资，免征个税</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>防暑降温措施管理办法</h4><p>安监总安健〔2012〕89号<br>国家安监总局等四部门联合发布<br>2012年6月29日施行</p></div>
+<div class="sc-card"><h4>云南省高温津贴标准</h4><p>室外≥60元/月，室内≥45元/月<br>发放时间：6月至9月<br>以现金形式发放，不得以实物替代</p></div>
+<div class="sc-card"><h4>个税优惠</h4><p>高温津贴免征个人所得税<br>依据：国税发〔2004〕118号</p></div>
+</div></div>
 
 <!-- ========== 退休政策 ========== -->
 <div class="panel" id="pn-retire">
@@ -240,6 +263,13 @@ tr:hover td{background:#f8fafc}
 <select id="ret-gender"><option value="m">男职工</option><option value="fw">女干部</option><option value="fwk">女工人</option></select>
 <button class="btn" onclick="calcRet()">查询</button></div>
 <div id="ret-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>全国人大常委会决定</h4><p>《关于实施渐进式延迟法定退休年龄的决定》<br>2024年9月13日通过<br><b>2025年1月1日正式施行</b></p></div>
+<div class="sc-card"><h4>国务院实施办法</h4><p>《国务院关于渐进式延迟法定退休年龄的办法》<br>过渡期15年（2025-2040）<br>最低缴费年限2030年起逐年增至20年</p></div>
+<div class="sc-card"><h4>弹性退休规定</h4><p>可提前最长3年（不低于原法定年龄）<br>协商一致可延迟最长3年<br>不得违背职工意愿强制退休</p></div>
+</div></div>
 </div>
 
 <!-- ========== 年休假 ========== -->
@@ -261,6 +291,13 @@ tr:hover td{background:#f8fafc}
 <div class="calc" style="margin-top:14px"><div class="calc-t">&#129518; 未休年假补偿计算器</div>
 <div class="calc-in"><label>月工资：</label><input type="number" id="lv-sal" placeholder="如 8000" style="width:100px"><label>未休天数：</label><input type="number" id="lv-day" placeholder="如 5" style="width:70px">天<button class="btn" onclick="calcLv()">计算</button></div>
 <div id="lv-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>职工带薪年休假条例</h4><p>国务院令第514号<br>2008年1月1日施行<br>年假5/10/15天三档标准</p></div>
+<div class="sc-card"><h4>企业职工带薪年休假实施办法</h4><p>人社部令第1号（2008年）<br>日工资=月工资÷21.75<br>未休补偿300%（含正常工资）</p></div>
+<div class="sc-card"><h4>最新修订动态</h4><p>2025年启动时隔18年首次大修讨论<br>拟加强执行力度、纳入灵活就业<br>目前仍执行2008版原文</p></div>
+</div></div>
 </div>
 
 <!-- ========== 加班与调休 ========== -->
@@ -283,6 +320,13 @@ tr:hover td{background:#f8fafc}
 <select id="ot-type"><option value="1.5">工作日(150%)</option><option value="2">休息日(200%)</option><option value="3">法定假日(300%)</option></select>
 <label>时长：</label><input type="number" id="ot-hr" placeholder="如 8" style="width:60px">小时<button class="btn" onclick="calcOt()">计算</button></div>
 <div id="ot-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>劳动法 第41-44条</h4><p>主席令第28号（1994年通过，2018年修正）<br>加班工资150%/200%/300%<br>每月加班≤36小时</p></div>
+<div class="sc-card"><h4>月计薪天数</h4><p>劳社部发〔2008〕3号<br>月计薪天数21.75天<br>=(365天-104天休息日)÷12月</p></div>
+<div class="sc-card"><h4>2025年更新</h4><p>法定节假日增至13天（2025年起）<br>法定假日加班必须支付300%，不可调休替代</p></div>
+</div></div>
 </div>
 
 <!-- ========== 产假/生育 ========== -->
@@ -302,6 +346,13 @@ tr:hover td{background:#f8fafc}
 <div class="sec"><div class="calc"><div class="calc-t">&#129518; 生育津贴计算器</div>
 <div class="calc-in"><label>单位月均工资：</label><input type="number" id="mt-sal" placeholder="如 7000" style="width:100px"><label>产假天数：</label><input type="number" id="mt-day" value="158" style="width:70px"><button class="btn" onclick="calcMt()">计算</button></div>
 <div id="mt-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>女职工劳动保护特别规定</h4><p>国务院令第619号（2012年）<br>基础产假98天（含产前15天）<br>难产+15天，多胞胎每多1个+15天</p></div>
+<div class="sc-card"><h4>云南省人口与计划生育条例</h4><p>2022年1月17日第三次修正<br>生育假延长60天（合计158天）<br>男方护理假30天<br>育儿假：子女3岁前每年10天</p></div>
+<div class="sc-card"><h4>生育津贴</h4><p>《社会保险法》第56条<br>津贴=单位上年度月均工资×产假天数÷30<br>高于工资差额归个人，低于工资单位补足</p></div>
+</div></div>
 </div>
 
 <!-- ========== 试用期 ========== -->
@@ -325,6 +376,13 @@ tr:hover td{background:#f8fafc}
 <div class="sec"><div class="calc"><div class="calc-t">&#129518; 试用期工资最低标准</div>
 <div class="calc-in"><label>约定月工资：</label><input type="number" id="pb-sal" placeholder="如 5000" style="width:100px"><button class="btn" onclick="calcPb()">计算</button></div>
 <div id="pb-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>劳动合同法 第19-21条</h4><p>主席令第65号（2007年通过，2012年修正）<br>试用期期限、工资标准、解除限制<br>同一单位只能约定一次试用期</p></div>
+<div class="sc-card"><h4>试用期工资</h4><p>第20条：≥约定工资80%<br>且≥当地最低工资标准<br>试用期必须缴纳社保（自用工之日起）</p></div>
+<div class="sc-card"><h4>试用期解除</h4><p>第21条：单位须证明不符合录用条件<br>劳动者提前3天通知即可<br>违法解除按2N赔偿</p></div>
+</div></div>
 </div>
 
 <div class="ft">
