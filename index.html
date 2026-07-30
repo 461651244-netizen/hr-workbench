@@ -5,32 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>人资工作台</title>
 <style>
-:root{--pri:#2563eb;--pri-l:#dbeafe;--pri-d:#1d4ed8;--ok:#059669;--ok-l:#d1fae5;--warn:#d97706;--warn-l:#fef3c7;--bg:#f0f4f8;--card:#fff;--txt:#1e293b;--txt2:#64748b;--bd:#e2e8f0;--r:12px}
+:root{--pri:#2563eb;--pri-l:#dbeafe;--pri-d:#1d4ed8;--ok:#059669;--ok-l:#d1fae5;--warn:#d97706;--warn-l:#fef3c7;--bg:#f0f4f8;--card:#fff;--txt:#1e293b;--txt2:#64748b;--bd:#e2e8f0;--r:12px;--sb-w:220px}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;min-height:100vh}
-.hd{background:linear-gradient(135deg,#1e3a5f,#2563eb 60%,#3b82f6);color:#fff;padding:22px 20px 16px;text-align:center;position:relative}
-.hd h1{font-size:20px;font-weight:700;letter-spacing:1px}
-.hd .sub{font-size:12px;opacity:.75;margin-top:2px}
-.hd .badge{display:inline-block;background:rgba(255,255,255,.18);border-radius:20px;padding:2px 12px;font-size:10px;margin-top:6px}
-.back-btn{position:absolute;left:14px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;cursor:pointer;display:none;backdrop-filter:blur(4px)}
-.back-btn:hover{background:rgba(255,255,255,.25)}
-#app.in-detail .back-btn{display:block}
-.tabs{display:flex;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.tab{flex:1;max-width:200px;padding:12px;text-align:center;font-size:14px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--txt2);transition:.2s;user-select:none}
-.tab:hover{color:var(--pri);background:var(--pri-l)}
-.tab.on{color:var(--pri);border-bottom-color:var(--pri);background:var(--pri-l)}
-.ct{max-width:860px;margin:0 auto;padding:14px}
-.page{display:none}
-.page.on{display:block}
-div.detail{display:none}
-div.detail.on{display:block}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;padding:14px}
-.mcard{background:var(--card);border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.07);cursor:pointer;transition:all .2s;border:2px solid transparent;overflow:hidden}
-.mcard:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1);border-color:var(--pri-l)}
-.mcard-icon{height:80px;display:flex;align-items:center;justify-content:center;font-size:36px}
-.mcard-body{padding:12px 14px}
-.mcard-title{font-size:15px;font-weight:700;margin-bottom:4px}
-.mcard-desc{font-size:12px;color:var(--txt2);line-height:1.5}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+#app{display:flex;flex:1;min-height:0}
+
+/* ===== 侧边栏 ===== */
+.sidebar{width:var(--sb-w);background:linear-gradient(180deg,#1e3a5f 0%,#1e40af 100%);color:#fff;display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;z-index:10}
+.sidebar-hd{padding:20px 16px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.12)}
+.sidebar-hd h1{font-size:17px;font-weight:700;letter-spacing:1px}
+.sidebar-hd .sub{font-size:11px;opacity:.7;margin-top:3px}
+.sidebar-hd .badge{display:inline-block;background:rgba(255,255,255,.15);border-radius:20px;padding:2px 10px;font-size:10px;margin-top:6px}
+.city-sw{display:flex;margin:12px 14px 6px;background:rgba(255,255,255,.1);border-radius:8px;overflow:hidden}
+.city-btn{flex:1;padding:8px;text-align:center;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;color:rgba(255,255,255,.7)}
+.city-btn:hover{background:rgba(255,255,255,.1)}
+.city-btn.on{background:rgba(255,255,255,.22);color:#fff}
+.nav-list{flex:1;padding:6px 10px;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 12px;margin-bottom:3px;border-radius:9px;cursor:pointer;transition:.2s;color:rgba(255,255,255,.78);font-size:13px;font-weight:500;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav-item.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700;box-shadow:inset 3px 0 0 #fff}
+.nav-item .ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.nav-item .ni-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-ft{padding:10px 14px;border-top:1px solid rgba(255,255,255,.1);font-size:10px;color:rgba(255,255,255,.45);text-align:center;line-height:1.5}
+
+/* ===== 右侧内容区 ===== */
+.main{flex:1;min-width:0;overflow-y:auto;height:100vh}
+.main-hd{background:#fff;padding:14px 20px;border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px}
+.main-hd .mh-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.main-hd .mh-title{font-size:16px;font-weight:700}
+.main-hd .mh-sub{font-size:12px;color:var(--txt2);margin-left:auto}
+.main-body{padding:16px 20px;max-width:900px}
+.panel{display:none}
+.panel.on{display:block}
+
+/* ===== 通用组件(保留原有) ===== */
 .sec{background:var(--card);border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:14px;padding:16px}
 .sec-t{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .sec-t .icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
@@ -69,52 +77,72 @@ tr:hover td{background:#f8fafc}
 .calc-in input:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 .btn{background:var(--pri);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
 .btn:hover{background:var(--pri-d)}
-.pl{display:block;padding:10px 14px;background:#f8fafc;border:1px solid var(--bd);border-radius:8px;text-decoration:none;color:var(--pri);font-size:13px;margin-bottom:8px;transition:.2s}
-.pl:hover{background:var(--pri-l);border-color:var(--pri)}
-.pl .pt{font-weight:600}.pl .ps{color:var(--txt2);font-size:11px;margin-top:2px}
+.ft{text-align:center;padding:14px;font-size:11px;color:var(--txt2)}
+
+/* 城市过滤 */
 #app.city-km [data-c="yx"]{display:none!important}
 #app.city-yx [data-c="km"]{display:none!important}
-.ft{text-align:center;padding:14px;font-size:11px;color:var(--txt2)}
-@media(max-width:600px){
-  .grid{grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-  .mcard-icon{height:60px;font-size:28px}
-  .ct{padding:10px}.sec{padding:12px}
-  table{font-size:11px}th,td{padding:6px 4px}
+
+/* 手机菜单按钮 */
+.menu-btn{display:none;background:none;border:none;font-size:22px;cursor:pointer;padding:4px 8px;color:var(--txt)}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+  #app{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:fixed;top:0;left:0;transform:translateX(-100%);transition:transform .3s;z-index:100}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+  .sidebar-overlay.open{display:block}
+  .menu-btn{display:block}
+  .main{height:auto}
+  .main-body{padding:12px}
   .sc-grid{grid-template-columns:1fr}.base-row{flex-direction:column}.wg{grid-template-columns:1fr 1fr}
+  table{font-size:11px}th,td{padding:6px 4px}
 }
 </style>
 </head>
 <body>
 <div id="app" class="city-km">
 
-<div class="hd">
-  <button class="back-btn" onclick="goHome()">&#8592; 返回</button>
-  <h1 id="pageTitle">人资工作台</h1>
-  <div class="sub" id="pageSub">云南省 · 昆明 / 玉溪 · 2025年度</div>
-  <div class="badge">数据更新: 2026-07-30</div>
-</div>
+<!-- 手机遮罩 -->
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<div class="tabs">
-  <div class="tab on" onclick="sw('km')">昆明市</div>
-  <div class="tab" onclick="sw('yx')">玉溪市</div>
+<!-- ===== 左侧导航栏 ===== -->
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-hd">
+  <h1>人资工作台</h1>
+  <div class="sub">云南省 · 昆明 / 玉溪</div>
+  <div class="badge">2025年度</div>
 </div>
+<div class="city-sw">
+  <div class="city-btn on" onclick="sw('km')">昆明市</div>
+  <div class="city-btn" onclick="sw('yx')">玉溪市</div>
+</div>
+<div class="nav-list">
+  <div class="nav-item on" data-nav="insurance" onclick="go('insurance')"><div class="ico" style="background:rgba(59,130,246,.25)">&#128202;</div><span class="ni-txt">五险一金</span></div>
+  <div class="nav-item" data-nav="severance" onclick="go('severance')"><div class="ico" style="background:rgba(220,38,38,.2)">&#9878;</div><span class="ni-txt">经济补偿 / 赔偿金</span></div>
+  <div class="nav-item" data-nav="heat" onclick="go('heat')"><div class="ico" style="background:rgba(234,88,12,.2)">&#9728;</div><span class="ni-txt">高温补贴</span></div>
+  <div class="nav-item" data-nav="retire" onclick="go('retire')"><div class="ico" style="background:rgba(124,58,237,.2)">&#128116;</div><span class="ni-txt">退休政策</span></div>
+  <div class="nav-item" data-nav="leave" onclick="go('leave')"><div class="ico" style="background:rgba(5,150,105,.2)">&#9992;</div><span class="ni-txt">年休假</span></div>
+  <div class="nav-item" data-nav="overtime" onclick="go('overtime')"><div class="ico" style="background:rgba(217,119,6,.2)">&#9200;</div><span class="ni-txt">加班与调休</span></div>
+  <div class="nav-item" data-nav="maternity" onclick="go('maternity')"><div class="ico" style="background:rgba(219,39,119,.2)">&#128118;</div><span class="ni-txt">产假 / 生育</span></div>
+  <div class="nav-item" data-nav="probation" onclick="go('probation')"><div class="ico" style="background:rgba(8,145,178,.2)">&#128203;</div><span class="ni-txt">试用期</span></div>
+</div>
+<div class="sidebar-ft">数据更新: 2026-07-30<br>每日自动检查政策更新</div>
+</aside>
 
-<!-- ========== 首页 ========== -->
-<div class="page on" id="pg-home">
-<div class="grid">
-  <div class="mcard" onclick="go('insurance')" style="border-left:4px solid #2563eb"><div class="mcard-icon" style="background:#dbeafe">&#128202;</div><div class="mcard-body"><div class="mcard-title">五险一金</div><div class="mcard-desc">缴费基数上下限、各项比例、月缴明细、计算器</div></div></div>
-  <div class="mcard" onclick="go('severance')" style="border-left:4px solid #dc2626"><div class="mcard-icon" style="background:#fee2e2">&#9878;</div><div class="mcard-body"><div class="mcard-title">经济补偿 / 赔偿金</div><div class="mcard-desc">N / N+1 / 2N 适用条件、计算方式、计算器</div></div></div>
-  <div class="mcard" onclick="go('heat')" style="border-left:4px solid #ea580c"><div class="mcard-icon" style="background:#fff7ed">&#9728;</div><div class="mcard-body"><div class="mcard-title">高温补贴</div><div class="mcard-desc">发放标准、时间、条件、劳动保护</div></div></div>
-  <div class="mcard" onclick="go('retire')" style="border-left:4px solid #7c3aed"><div class="mcard-icon" style="background:#ede9fe">&#128116;</div><div class="mcard-body"><div class="mcard-title">退休政策</div><div class="mcard-desc">法定退休年龄、延迟退休、弹性退休、速查</div></div></div>
-  <div class="mcard" onclick="go('leave')" style="border-left:4px solid #059669"><div class="mcard-icon" style="background:#d1fae5">&#9992;</div><div class="mcard-body"><div class="mcard-title">年休假</div><div class="mcard-desc">年假天数、未休补偿、折算方法、计算器</div></div></div>
-  <div class="mcard" onclick="go('overtime')" style="border-left:4px solid #d97706"><div class="mcard-icon" style="background:#fef3c7">&#9200;</div><div class="mcard-body"><div class="mcard-title">加班与调休</div><div class="mcard-desc">加班工资倍率、上限规定、调休规则、计算器</div></div></div>
-  <div class="mcard" onclick="go('maternity')" style="border-left:4px solid #db2777"><div class="mcard-icon" style="background:#fce7f3">&#128118;</div><div class="mcard-body"><div class="mcard-title">产假 / 生育</div><div class="mcard-desc">产假天数、陪产假、哺乳假、生育津贴</div></div></div>
-  <div class="mcard" onclick="go('probation')" style="border-left:4px solid #0891b2"><div class="mcard-icon" style="background:#cffafe">&#128203;</div><div class="mcard-body"><div class="mcard-title">试用期</div><div class="mcard-desc">期限规定、工资标准、解除限制</div></div></div>
+<!-- ===== 右侧内容区 ===== -->
+<div class="main">
+<div class="main-hd">
+  <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
+  <div class="mh-ico" id="mhIco" style="background:#dbeafe">&#128202;</div>
+  <span class="mh-title" id="mhTitle">五险一金</span>
+  <span class="mh-sub" id="mhSub">缴费基数·比例·计算器</span>
 </div>
-</div>
+<div class="main-body">
 
 <!-- ========== 五险一金 ========== -->
-<div class="detail" id="dt-insurance"><div class="ct">
+<div class="panel on" id="pn-insurance">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#dbeafe">&#128200;</div>社会保险缴费基数（全省统一·2025年度）</div>
 <div class="base-row"><div class="base-item"><div class="bl">缴费基数基准值</div><div class="bv">7,263<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">基数上限(300%)</div><div class="bv">21,789<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">基数下限(60%)</div><div class="bv">4,357<span class="u"> 元/月</span></div></div></div>
 <div class="note"><b>说明：</b>养老、医疗、失业、工伤执行统一的缴费基数口径，基于2025年云南省全口径城镇单位就业人员月平均工资7,263元确定。</div></div>
@@ -152,10 +180,10 @@ tr:hover td{background:#f8fafc}
 <div class="sec"><div class="calc"><div class="calc-t">&#129518; 五险一金缴费计算器</div>
 <div class="calc-in"><label>月工资：</label><input type="number" id="ins-sal" placeholder="如 6000"><button class="btn" onclick="calcIns()">计算</button></div>
 <div id="ins-r"></div></div></div>
-</div></div>
+</div>
 
 <!-- ========== 经济补偿 ========== -->
-<div class="detail" id="dt-severance"><div class="ct">
+<div class="panel" id="pn-severance">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#fee2e2">&#9878;</div>经济补偿 / 赔偿金计算标准</div>
 <div class="note ok"><b>核心公式：</b>经济补偿 = 工作年限(N) × 月工资</div>
 <table><thead><tr><th style="text-align:left">情形</th><th>公式</th><th>适用条件</th></tr></thead><tbody>
@@ -177,10 +205,10 @@ tr:hover td{background:#f8fafc}
 <select id="sev-type"><option value="n">N（合法解除）</option><option value="n1">N+1（未提前通知）</option><option value="2n">2N（违法解除）</option></select>
 <button class="btn" onclick="calcSev()">计算</button></div>
 <div id="sev-r"></div></div></div>
-</div></div>
+</div>
 
 <!-- ========== 高温补贴 ========== -->
-<div class="detail" id="dt-heat"><div class="ct">
+<div class="panel" id="pn-heat">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#fff7ed">&#9728;</div>云南省高温补贴标准</div>
 <div class="base-row"><div class="base-item"><div class="bl">室外高温作业</div><div class="bv">≥60<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">室内温度≥33°C</div><div class="bv">≥45<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">发放时间</div><div class="bv" style="font-size:16px">6~9月</div></div><div class="base-item"><div class="bl">全年合计(室外)</div><div class="bv">≥240<span class="u"> 元</span></div></div></div>
 <div class="note"><b>重要提醒：</b>·高温补贴纳入工资总额但不计入最低工资 ·防暑降温物品不可顶替津贴 ·不得因高温停工克扣正常工资 ·高温补贴免征个税</div></div>
@@ -192,10 +220,10 @@ tr:hover td{background:#f8fafc}
 <tr><td style="text-align:left">日最高温35~37°C</td><td>换班轮休，缩短连续作业时间</td></tr>
 </tbody></table>
 <div class="note info"><b>法律依据：</b>《防暑降温措施管理办法》（安监总安健〔2012〕89号）</div></div>
-</div></div>
+</div>
 
 <!-- ========== 退休政策 ========== -->
-<div class="detail" id="dt-retire"><div class="ct">
+<div class="panel" id="pn-retire">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#ede9fe">&#128116;</div>渐进式延迟退休（2025年1月1日起）</div>
 <table><thead><tr><th style="text-align:left">类别</th><th>原法定年龄</th><th>目标年龄</th><th>渐进节奏</th></tr></thead><tbody>
 <tr><td style="text-align:left;font-weight:600">男职工</td><td>60周岁</td><td><span class="tg tw">63周岁</span></td><td>每4个月延迟1个月</td></tr>
@@ -212,10 +240,10 @@ tr:hover td{background:#f8fafc}
 <select id="ret-gender"><option value="m">男职工</option><option value="fw">女干部</option><option value="fwk">女工人</option></select>
 <button class="btn" onclick="calcRet()">查询</button></div>
 <div id="ret-r"></div></div></div>
-</div></div>
+</div>
 
 <!-- ========== 年休假 ========== -->
-<div class="detail" id="dt-leave"><div class="ct">
+<div class="panel" id="pn-leave">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#d1fae5">&#9992;</div>带薪年休假天数</div>
 <table><thead><tr><th>累计工作年限</th><th>年假天数</th><th>说明</th></tr></thead><tbody>
 <tr><td style="font-weight:600">满1年不满10年</td><td><span class="tg te">5天</span></td><td>含不同单位的工作年限</td></tr>
@@ -233,10 +261,10 @@ tr:hover td{background:#f8fafc}
 <div class="calc" style="margin-top:14px"><div class="calc-t">&#129518; 未休年假补偿计算器</div>
 <div class="calc-in"><label>月工资：</label><input type="number" id="lv-sal" placeholder="如 8000" style="width:100px"><label>未休天数：</label><input type="number" id="lv-day" placeholder="如 5" style="width:70px">天<button class="btn" onclick="calcLv()">计算</button></div>
 <div id="lv-r"></div></div></div>
-</div></div>
+</div>
 
 <!-- ========== 加班与调休 ========== -->
-<div class="detail" id="dt-overtime"><div class="ct">
+<div class="panel" id="pn-overtime">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#9200;</div>加班工资计算标准</div>
 <table><thead><tr><th style="text-align:left">加班类型</th><th>工资倍率</th><th>能否调休代替</th></tr></thead><tbody>
 <tr><td style="text-align:left;font-weight:600">工作日延长</td><td><span class="tg te">150%</span></td><td><span class="tg tr">不能</span>，必须支付</td></tr>
@@ -255,10 +283,10 @@ tr:hover td{background:#f8fafc}
 <select id="ot-type"><option value="1.5">工作日(150%)</option><option value="2">休息日(200%)</option><option value="3">法定假日(300%)</option></select>
 <label>时长：</label><input type="number" id="ot-hr" placeholder="如 8" style="width:60px">小时<button class="btn" onclick="calcOt()">计算</button></div>
 <div id="ot-r"></div></div></div>
-</div></div>
+</div>
 
 <!-- ========== 产假/生育 ========== -->
-<div class="detail" id="dt-maternity"><div class="ct">
+<div class="panel" id="pn-maternity">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#fce7f3">&#128118;</div>产假/陪产假/哺乳假（云南省）</div>
 <table><thead><tr><th style="text-align:left">假期类型</th><th>天数</th><th>说明</th></tr></thead><tbody>
 <tr><td style="text-align:left;font-weight:600">产假（顺产）</td><td><span class="tg te">158天</span></td><td>国家98天+云南省生育假60天</td></tr>
@@ -274,10 +302,10 @@ tr:hover td{background:#f8fafc}
 <div class="sec"><div class="calc"><div class="calc-t">&#129518; 生育津贴计算器</div>
 <div class="calc-in"><label>单位月均工资：</label><input type="number" id="mt-sal" placeholder="如 7000" style="width:100px"><label>产假天数：</label><input type="number" id="mt-day" value="158" style="width:70px"><button class="btn" onclick="calcMt()">计算</button></div>
 <div id="mt-r"></div></div></div>
-</div></div>
+</div>
 
 <!-- ========== 试用期 ========== -->
-<div class="detail" id="dt-probation"><div class="ct">
+<div class="panel" id="pn-probation">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#cffafe">&#128203;</div>试用期期限与工资标准</div>
 <table><thead><tr><th style="text-align:left">合同期限</th><th>试用期上限</th><th>试用期工资</th></tr></thead><tbody>
 <tr><td style="text-align:left">不满3个月（含）</td><td><span class="tg tr">不得约定</span></td><td>-</td></tr>
@@ -297,21 +325,62 @@ tr:hover td{background:#f8fafc}
 <div class="sec"><div class="calc"><div class="calc-t">&#129518; 试用期工资最低标准</div>
 <div class="calc-in"><label>约定月工资：</label><input type="number" id="pb-sal" placeholder="如 5000" style="width:100px"><button class="btn" onclick="calcPb()">计算</button></div>
 <div id="pb-r"></div></div></div>
-</div></div>
+</div>
 
 <div class="ft">
 <p>数据来源：云南省人力资源和社会保障厅·昆明市/玉溪市住房公积金管理中心·劳动合同法</p>
 <p>每日自动检查政策更新·仅供参考·最后校验：<span id="lc">2026-07-30</span></p>
 </div>
+</div>
+</div><!-- /main -->
+</div><!-- /app -->
 
 <script>
 let city='km';
-const titles={home:['人资工作台','云南省·昆明/玉溪·2025年度'],insurance:['五险一金','缴费基数·比例·计算器'],severance:['经济补偿/赔偿金','N/N+1/2N·计算器'],heat:['高温补贴','云南省标准·发放条件'],retire:['退休政策','法定年龄·延迟退休·速查'],leave:['年休假','天数标准·未休补偿'],overtime:['加班与调休','工资倍率·时长限制'],maternity:['产假/生育','产假·陪产假·生育津贴'],probation:['试用期','期限·工资·解除限制']};
+const meta={
+  insurance:{title:'五险一金',sub:'缴费基数·比例·计算器',ico:'&#128202;',bg:'#dbeafe'},
+  severance:{title:'经济补偿 / 赔偿金',sub:'N/N+1/2N·计算器',ico:'&#9878;',bg:'#fee2e2'},
+  heat:{title:'高温补贴',sub:'云南省标准·发放条件',ico:'&#9728;',bg:'#fff7ed'},
+  retire:{title:'退休政策',sub:'法定年龄·延迟退休·速查',ico:'&#128116;',bg:'#ede9fe'},
+  leave:{title:'年休假',sub:'天数标准·未休补偿',ico:'&#9992;',bg:'#d1fae5'},
+  overtime:{title:'加班与调休',sub:'工资倍率·时长限制',ico:'&#9200;',bg:'#fef3c7'},
+  maternity:{title:'产假 / 生育',sub:'产假·陪产假·生育津贴',ico:'&#128118;',bg:'#fce7f3'},
+  probation:{title:'试用期',sub:'期限·工资·解除限制',ico:'&#128203;',bg:'#cffafe'}
+};
 const app=document.getElementById('app');
-app.className='city-km';
-function sw(c){city=c;app.classList.remove('city-km','city-yx');app.classList.add('city-'+c);document.querySelectorAll('.tab').forEach(t=>{if((c==='km'&&t.textContent.includes('昆明'))||(c==='yx'&&t.textContent.includes('玉溪')))t.classList.add('on');else t.classList.remove('on')})}
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.querySelectorAll('div.detail').forEach(d=>d.classList.remove('on'));document.getElementById('dt-'+id).classList.add('on');document.getElementById('pageTitle').textContent=titles[id][0];document.getElementById('pageSub').textContent=titles[id][1];app.classList.add('in-detail');window.scrollTo(0,0)}
-function goHome(){document.querySelectorAll('div.detail').forEach(d=>d.classList.remove('on'));document.getElementById('pg-home').classList.add('on');document.getElementById('pageTitle').textContent=titles.home[0];document.getElementById('pageSub').textContent=titles.home[1];app.classList.remove('in-detail');window.scrollTo(0,0)}
+
+function sw(c){
+  city=c;
+  app.classList.remove('city-km','city-yx');
+  app.classList.add('city-'+c);
+  document.querySelectorAll('.city-btn').forEach(b=>{
+    if((c==='km'&&b.textContent.includes('昆明'))||(c==='yx'&&b.textContent.includes('玉溪')))b.classList.add('on');
+    else b.classList.remove('on');
+  });
+}
+
+function go(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('pn-'+id).classList.add('on');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('on'));
+  document.querySelector('[data-nav="'+id+'"]').classList.add('on');
+  const m=meta[id];
+  document.getElementById('mhTitle').textContent=m.title;
+  document.getElementById('mhSub').textContent=m.sub;
+  document.getElementById('mhIco').innerHTML=m.ico;
+  document.getElementById('mhIco').style.background=m.bg;
+  document.querySelector('.main').scrollTo(0,0);
+  closeSidebar();
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
 
 function calcIns(){
   const s=parseFloat(document.getElementById('ins-sal').value);if(!s||s<=0)return;
@@ -344,7 +413,6 @@ function calcRet(){
   let oa,ta,iv;if(g==='m'){oa=60;ta=63;iv=4}else if(g==='fw'){oa=55;ta=58;iv=4}else{oa=50;ta=55;iv=2}
   const origY=y+oa;if(origY<2025){document.getElementById('ret-r').innerHTML=`<div style="text-align:center;padding:12px;background:#f0fdf4;border-radius:10px"><div style="font-weight:600;color:#059669">已于${origY}年达到法定退休年龄（${oa}周岁）</div></div>`;return}
   const mf25=(origY-2025)*12;const dm=Math.min(Math.ceil(mf25/iv),(ta-oa)*12);const aa=oa+dm/12;const ay=y+aa;
-  const gl=g==='m'?'男职工':g==='fw'?'女干部':'女工人';
   document.getElementById('ret-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">原法定退休</div><div style="font-size:16px;font-weight:700">${origY}年(${oa}岁)</div></div><div><div style="font-size:11px;color:#64748b">延迟月数</div><div style="font-size:16px;font-weight:700;color:#d97706">+${dm}个月</div></div><div><div style="font-size:11px;color:#64748b">实际退休</div><div style="font-size:16px;font-weight:700;color:#dc2626">${ay.toFixed(1)}年(${aa.toFixed(1)}岁)</div></div></div><div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">可申请提前最长3年（不早于${origY}年）</div></div>`;
 }
 
@@ -375,6 +443,5 @@ function calcPb(){
 
 document.querySelectorAll('input[type=number]').forEach(i=>i.addEventListener('keypress',e=>{if(e.key==='Enter'){const b=i.closest('.calc').querySelector('.btn');if(b)b.click()}}));
 </script>
-</div>
 </body>
 </html>
