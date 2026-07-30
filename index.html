@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人资工作台</title>
+<style>
+:root{--pri:#2563eb;--pri-l:#dbeafe;--pri-d:#1d4ed8;--ok:#059669;--ok-l:#d1fae5;--warn:#d97706;--warn-l:#fef3c7;--bg:#f0f4f8;--card:#fff;--txt:#1e293b;--txt2:#64748b;--bd:#e2e8f0;--r:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;min-height:100vh}
+.hd{background:linear-gradient(135deg,#1e3a5f,#2563eb 60%,#3b82f6);color:#fff;padding:22px 20px 16px;text-align:center;position:relative}
+.hd h1{font-size:20px;font-weight:700;letter-spacing:1px}
+.hd .sub{font-size:12px;opacity:.75;margin-top:2px}
+.hd .badge{display:inline-block;background:rgba(255,255,255,.18);border-radius:20px;padding:2px 12px;font-size:10px;margin-top:6px}
+.back-btn{position:absolute;left:14px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;cursor:pointer;display:none;backdrop-filter:blur(4px)}
+.back-btn:hover{background:rgba(255,255,255,.25)}
+#app.in-detail .back-btn{display:block}
+.tabs{display:flex;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tab{flex:1;max-width:200px;padding:12px;text-align:center;font-size:14px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--txt2);transition:.2s;user-select:none}
+.tab:hover{color:var(--pri);background:var(--pri-l)}
+.tab.on{color:var(--pri);border-bottom-color:var(--pri);background:var(--pri-l)}
+.ct{max-width:860px;margin:0 auto;padding:14px}
+.page{display:none}
+.page.on{display:block}
+div.detail{display:none}
+div.detail.on{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;padding:14px}
+.mcard{background:var(--card);border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.07);cursor:pointer;transition:all .2s;border:2px solid transparent;overflow:hidden}
+.mcard:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1);border-color:var(--pri-l)}
+.mcard-icon{height:80px;display:flex;align-items:center;justify-content:center;font-size:36px}
+.mcard-body{padding:12px 14px}
+.mcard-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.mcard-desc{font-size:12px;color:var(--txt2);line-height:1.5}
+.sec{background:var(--card);border-radius:var(--r);box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:14px;padding:16px}
+.sec-t{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sec-t .icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.base-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.base-item{flex:1;min-width:130px;background:#f8fafc;border:1px solid var(--bd);border-radius:8px;padding:10px 12px;text-align:center}
+.base-item .bl{font-size:11px;color:var(--txt2)}
+.base-item .bv{font-size:18px;font-weight:800;color:var(--pri-d)}
+.base-item .bv .u{font-size:11px;font-weight:400;color:var(--txt2)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f1f5f9;padding:8px 10px;text-align:center;font-weight:600;color:var(--txt2);font-size:12px;border-bottom:2px solid var(--bd);white-space:nowrap}
+td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--bd)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8fafc}
+.tg{display:inline-block;padding:2px 8px;border-radius:4px;font-weight:600;font-size:12px;white-space:nowrap}
+.te{background:#dbeafe;color:#1d4ed8}.tp{background:#fce7f3;color:#be185d}.tf{background:#d1fae5;color:#059669}
+.tw{background:#fef3c7;color:#92400e}.tr{background:#fee2e2;color:#991b1b}
+.tot{background:#f0f9ff;font-weight:700}.tot td{border-top:2px solid #93c5fd}
+.note{background:#fffbeb;border-left:3px solid #f59e0b;border-radius:0 6px 6px 0;padding:10px 14px;font-size:12px;color:#92400e;margin-top:10px;line-height:1.7}
+.note b{color:#78350f}
+.note.info{background:#eff6ff;border-left-color:#3b82f6;color:#1e40af}.note.info b{color:#1e3a8a}
+.note.ok{background:#f0fdf4;border-left-color:#22c55e;color:#166534}.note.ok b{color:#14532d}
+.wg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.wc{border-radius:10px;padding:12px;text-align:center;border:1px solid #bae6fd;background:linear-gradient(135deg,#f0f9ff,#e0f2fe)}
+.wc.g{border-color:#86efac;background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
+.wc .wl{font-size:11px;color:var(--txt2)}.wc .wv{font-size:20px;font-weight:800;margin:3px 0}.wc .ws{font-size:11px;color:var(--txt2)}
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.sc-card{background:#f8fafc;border:1px solid var(--bd);border-radius:10px;padding:14px}
+.sc-card h4{font-size:13px;color:var(--pri-d);margin-bottom:6px}
+.sc-card p{font-size:12px;color:var(--txt2);line-height:1.6}
+.sc-card .formula{font-size:14px;font-weight:700;color:var(--txt);margin:6px 0;font-family:monospace}
+.calc{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:10px;padding:14px}
+.calc-t{font-size:13px;font-weight:600;margin-bottom:10px;color:var(--pri-d)}
+.calc-in{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.calc-in label{font-size:12px;white-space:nowrap}
+.calc-in input,.calc-in select{padding:7px 10px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;outline:none;min-width:0}
+.calc-in input:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.btn{background:var(--pri);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--pri-d)}
+.pl{display:block;padding:10px 14px;background:#f8fafc;border:1px solid var(--bd);border-radius:8px;text-decoration:none;color:var(--pri);font-size:13px;margin-bottom:8px;transition:.2s}
+.pl:hover{background:var(--pri-l);border-color:var(--pri)}
+.pl .pt{font-weight:600}.pl .ps{color:var(--txt2);font-size:11px;margin-top:2px}
+#app.city-km [data-c="yx"]{display:none!important}
+#app.city-yx [data-c="km"]{display:none!important}
+.ft{text-align:center;padding:14px;font-size:11px;color:var(--txt2)}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+  .mcard-icon{height:60px;font-size:28px}
+  .ct{padding:10px}.sec{padding:12px}
+  table{font-size:11px}th,td{padding:6px 4px}
+  .sc-grid{grid-template-columns:1fr}.base-row{flex-direction:column}.wg{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="app" class="city-km">
+
+<div class="hd">
+  <button class="back-btn" onclick="goHome()">&#8592; 返回</button>
+  <h1 id="pageTitle">人资工作台</h1>
+  <div class="sub" id="pageSub">云南省 · 昆明 / 玉溪 · 2025年度</div>
+  <div class="badge">数据更新: 2026-07-30</div>
+</div>
+
+<div class="tabs">
+  <div class="tab on" onclick="sw('km')">昆明市</div>
+  <div class="tab" onclick="sw('yx')">玉溪市</div>
+</div>
+
+<!-- ========== 首页 ========== -->
+<div class="page on" id="pg-home">
+<div class="grid">
+  <div class="mcard" onclick="go('insurance')" style="border-left:4px solid #2563eb"><div class="mcard-icon" style="background:#dbeafe">&#128202;</div><div class="mcard-body"><div class="mcard-title">五险一金</div><div class="mcard-desc">缴费基数上下限、各项比例、月缴明细、计算器</div></div></div>
+  <div class="mcard" onclick="go('severance')" style="border-left:4px solid #dc2626"><div class="mcard-icon" style="background:#fee2e2">&#9878;</div><div class="mcard-body"><div class="mcard-title">经济补偿 / 赔偿金</div><div class="mcard-desc">N / N+1 / 2N 适用条件、计算方式、计算器</div></div></div>
+  <div class="mcard" onclick="go('heat')" style="border-left:4px solid #ea580c"><div class="mcard-icon" style="background:#fff7ed">&#9728;</div><div class="mcard-body"><div class="mcard-title">高温补贴</div><div class="mcard-desc">发放标准、时间、条件、劳动保护</div></div></div>
+  <div class="mcard" onclick="go('retire')" style="border-left:4px solid #7c3aed"><div class="mcard-icon" style="background:#ede9fe">&#128116;</div><div class="mcard-body"><div class="mcard-title">退休政策</div><div class="mcard-desc">法定退休年龄、延迟退休、弹性退休、速查</div></div></div>
+  <div class="mcard" onclick="go('leave')" style="border-left:4px solid #059669"><div class="mcard-icon" style="background:#d1fae5">&#9992;</div><div class="mcard-body"><div class="mcard-title">年休假</div><div class="mcard-desc">年假天数、未休补偿、折算方法、计算器</div></div></div>
+  <div class="mcard" onclick="go('overtime')" style="border-left:4px solid #d97706"><div class="mcard-icon" style="background:#fef3c7">&#9200;</div><div class="mcard-body"><div class="mcard-title">加班与调休</div><div class="mcard-desc">加班工资倍率、上限规定、调休规则、计算器</div></div></div>
+  <div class="mcard" onclick="go('maternity')" style="border-left:4px solid #db2777"><div class="mcard-icon" style="background:#fce7f3">&#128118;</div><div class="mcard-body"><div class="mcard-title">产假 / 生育</div><div class="mcard-desc">产假天数、陪产假、哺乳假、生育津贴</div></div></div>
+  <div class="mcard" onclick="go('probation')" style="border-left:4px solid #0891b2"><div class="mcard-icon" style="background:#cffafe">&#128203;</div><div class="mcard-body"><div class="mcard-title">试用期</div><div class="mcard-desc">期限规定、工资标准、解除限制</div></div></div>
+</div>
+</div>
+
+<!-- ========== 五险一金 ========== -->
+<div class="detail" id="dt-insurance"><div class="ct">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#dbeafe">&#128200;</div>社会保险缴费基数（全省统一·2025年度）</div>
+<div class="base-row"><div class="base-item"><div class="bl">缴费基数基准值</div><div class="bv">7,263<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">基数上限(300%)</div><div class="bv">21,789<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">基数下限(60%)</div><div class="bv">4,357<span class="u"> 元/月</span></div></div></div>
+<div class="note"><b>说明：</b>养老、医疗、失业、工伤执行统一的缴费基数口径，基于2025年云南省全口径城镇单位就业人员月平均工资7,263元确定。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128202;</div>五险一金缴费明细汇总</div>
+<div style="overflow-x:auto"><table><thead><tr><th style="text-align:left">险种</th><th>单位比例</th><th>个人比例</th><th>缴费基数范围</th><th>按下限月缴(单位)</th><th>按下限月缴(个人)</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">养老保险</td><td><span class="tg te">16%</span></td><td><span class="tg tp">8%</span></td><td>4,357~21,789</td><td>697.12</td><td>348.56</td></tr>
+<tr><td style="text-align:left;font-weight:600">医疗保险<br><span style="font-size:10px;color:#94a3b8">含生育保险</span></td><td><span class="tg te">9%</span></td><td><span class="tg tp">2%</span></td><td>4,357~21,789</td><td>392.13</td><td>87.14</td></tr>
+<tr><td style="text-align:left;font-weight:600">大病医疗互助</td><td><span class="tg te">0.6%</span></td><td><span class="tg tp">~1元/月</span></td><td>按社平工资</td><td>43.58</td><td>1.00</td></tr>
+<tr><td style="text-align:left;font-weight:600">失业保险</td><td><span class="tg te">0.7%</span></td><td><span class="tg tp">0.3%</span></td><td>4,357~21,789</td><td>30.50</td><td>13.07</td></tr>
+<tr><td style="text-align:left;font-weight:600">工伤保险</td><td><span class="tg tw">0.2%~1.9%</span></td><td><span class="tg tf">不缴纳</span></td><td>4,357~21,789</td><td>8.71~82.78</td><td>-</td></tr>
+<tr class="tot"><td style="text-align:left">社保小计(四类行业)</td><td>26.5%~28.2%</td><td>10.3%</td><td>-</td><td>1,172~1,245</td><td>449.77</td></tr>
+<tr style="height:6px"><td colspan="6" style="padding:0;border:none"></td></tr>
+<tr data-c="km"><td style="text-align:left;font-weight:600">公积金(昆明)</td><td><span class="tg te">5%~12%</span></td><td><span class="tg tp">5%~12%</span></td><td>2,070~32,470</td><td>103~248</td><td>103~248</td></tr>
+<tr data-c="yx"><td style="text-align:left;font-weight:600">公积金(玉溪)</td><td><span class="tg te">5%~12%</span></td><td><span class="tg tp">5%~12%</span></td><td>1,920~27,267</td><td>96~230</td><td>96~230</td></tr>
+</tbody></table></div>
+<div class="note"><b>工伤：</b>按行业风险分8类(0.2%~1.9%)，制造业通常四类(0.9%)。<b>失业：</b>阶段性降费至1%，延续至2025年底。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#ede9fe">&#127968;</div>住房公积金缴存详情</div>
+<div data-c="km"><div class="base-row"><div class="base-item"><div class="bl">基数上限</div><div class="bv">32,470<span class="u"> 元</span></div></div><div class="base-item"><div class="bl">下限(主城区)</div><div class="bv">2,070<span class="u"> 元</span></div></div><div class="base-item"><div class="bl">下限(东川等)</div><div class="bv">1,920<span class="u"> 元</span></div></div></div>
+<div class="note info"><b>昆明区划：</b>主城区(2,070元):五华、盘龙、官渡、西山、呈贡、晋宁、安宁、嵩明 | 二类(1,920元):东川区及其他县 | 依据:昆公积金〔2025〕61号</div></div>
+<div data-c="yx"><div class="base-row"><div class="base-item"><div class="bl">基数上限</div><div class="bv">27,267<span class="u"> 元</span></div></div><div class="base-item"><div class="bl">下限(红塔/江川/澄江)</div><div class="bv">1,920<span class="u"> 元</span></div></div><div class="base-item"><div class="bl">下限(其他6县)</div><div class="bv">1,770<span class="u"> 元</span></div></div></div>
+<div class="note info"><b>玉溪区划：</b>二类(1,920元):红塔区、江川区、澄江市 | 三类(1,770元):通海、华宁、易门、峨山、新平、元江</div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#ccfbf1">&#128178;</div>最低工资与社平工资</div>
+<div class="wg">
+<div class="wc" data-c="km"><div class="wl">最低工资·一类</div><div class="wv" style="color:var(--ok)">2,070<span style="font-size:12px"> 元/月</span></div><div class="ws">20元/时·主城八区+嵩明</div></div>
+<div class="wc" data-c="km"><div class="wl">最低工资·二类</div><div class="wv" style="color:var(--ok)">1,920<span style="font-size:12px"> 元/月</span></div><div class="ws">19元/时·东川及其他县</div></div>
+<div class="wc" data-c="yx"><div class="wl">最低工资·二类</div><div class="wv" style="color:var(--ok)">1,920<span style="font-size:12px"> 元/月</span></div><div class="ws">19元/时·红塔/江川/澄江</div></div>
+<div class="wc" data-c="yx"><div class="wl">最低工资·三类</div><div class="wv" style="color:var(--ok)">1,770<span style="font-size:12px"> 元/月</span></div><div class="ws">18元/时·其余6县</div></div>
+<div class="wc g"><div class="wl">非私营单位年均</div><div class="wv" style="color:var(--pri-d)">113,558<span style="font-size:12px"> 元</span></div><div class="ws">约9,463元/月</div></div>
+<div class="wc g"><div class="wl">私营单位年均</div><div class="wv" style="color:var(--pri-d)">55,363<span style="font-size:12px"> 元</span></div><div class="ws">约4,614元/月</div></div>
+</div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 五险一金缴费计算器</div>
+<div class="calc-in"><label>月工资：</label><input type="number" id="ins-sal" placeholder="如 6000"><button class="btn" onclick="calcIns()">计算</button></div>
+<div id="ins-r"></div></div></div>
+</div></div>
+
+<!-- ========== 经济补偿 ========== -->
+<div class="detail" id="dt-severance"><div class="ct">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fee2e2">&#9878;</div>经济补偿 / 赔偿金计算标准</div>
+<div class="note ok"><b>核心公式：</b>经济补偿 = 工作年限(N) × 月工资</div>
+<table><thead><tr><th style="text-align:left">情形</th><th>公式</th><th>适用条件</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">合法解除（提前30天通知）</td><td><span class="tg te">N</span></td><td>符合法定情形，提前30天书面通知</td></tr>
+<tr><td style="text-align:left;font-weight:600">合法解除（未提前通知）</td><td><span class="tg te">N+1</span></td><td>符合法定情形，未提前30天通知需额外支付1个月代通知金</td></tr>
+<tr><td style="text-align:left;font-weight:600">违法解除</td><td><span class="tg tr">2N</span></td><td>用人单位违法解除或终止劳动合同</td></tr>
+</tbody></table>
+<div class="note"><b>N的计算：</b>每满1年=1个月；6个月以上不满1年按1年算；不满6个月=半个月。<b>月工资基数：</b>解除前12个月平均工资（含奖金津贴）。<b>上限：</b>月工资超社平3倍的按3倍算，补偿年限最高12年。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128209;</div>适用情形对照</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>支付经济补偿(N)</h4><p>·协商一致解除（单位提出）<br>·不能胜任工作<br>·客观情况重大变化<br>·经济性裁员<br>·合同到期不续签（单位提出）</p></div>
+<div class="sc-card"><h4>不支付补偿</h4><p>·劳动者主动辞职<br>·试用期不符合录用条件<br>·严重违反规章制度<br>·严重失职造成重大损害<br>·不愿续签（同等条件）</p></div>
+<div class="sc-card"><h4>违法解除(2N)</h4><p>·无正当理由辞退<br>·未履行法定程序<br>·禁止解除期间辞退（孕期/产期/工伤/医疗期）<br>·以末位淘汰为由辞退</p></div>
+</div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 经济补偿金/赔偿金计算器</div>
+<div class="calc-in"><label>月工资：</label><input type="number" id="sev-sal" placeholder="如 8000" style="width:100px"><label>工作年限：</label><input type="number" id="sev-yr" placeholder="如 3.5" step="0.1" style="width:80px">年
+<select id="sev-type"><option value="n">N（合法解除）</option><option value="n1">N+1（未提前通知）</option><option value="2n">2N（违法解除）</option></select>
+<button class="btn" onclick="calcSev()">计算</button></div>
+<div id="sev-r"></div></div></div>
+</div></div>
+
+<!-- ========== 高温补贴 ========== -->
+<div class="detail" id="dt-heat"><div class="ct">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fff7ed">&#9728;</div>云南省高温补贴标准</div>
+<div class="base-row"><div class="base-item"><div class="bl">室外高温作业</div><div class="bv">≥60<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">室内温度≥33°C</div><div class="bv">≥45<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">发放时间</div><div class="bv" style="font-size:16px">6~9月</div></div><div class="base-item"><div class="bl">全年合计(室外)</div><div class="bv">≥240<span class="u"> 元</span></div></div></div>
+<div class="note"><b>重要提醒：</b>·高温补贴纳入工资总额但不计入最低工资 ·防暑降温物品不可顶替津贴 ·不得因高温停工克扣正常工资 ·高温补贴免征个税</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#127777;</div>高温天气劳动保护</div>
+<table><thead><tr><th style="text-align:left">气温条件</th><th>要求</th></tr></thead><tbody>
+<tr><td style="text-align:left">日最高温≥40°C</td><td><span class="tg tr">停止室外作业</span></td></tr>
+<tr><td style="text-align:left">日最高温37~40°C</td><td>全天室外≤6小时，12:00~15:00不得作业</td></tr>
+<tr><td style="text-align:left">日最高温35~37°C</td><td>换班轮休，缩短连续作业时间</td></tr>
+</tbody></table>
+<div class="note info"><b>法律依据：</b>《防暑降温措施管理办法》（安监总安健〔2012〕89号）</div></div>
+</div></div>
+
+<!-- ========== 退休政策 ========== -->
+<div class="detail" id="dt-retire"><div class="ct">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#ede9fe">&#128116;</div>渐进式延迟退休（2025年1月1日起）</div>
+<table><thead><tr><th style="text-align:left">类别</th><th>原法定年龄</th><th>目标年龄</th><th>渐进节奏</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">男职工</td><td>60周岁</td><td><span class="tg tw">63周岁</span></td><td>每4个月延迟1个月</td></tr>
+<tr><td style="text-align:left;font-weight:600">女干部</td><td>55周岁</td><td><span class="tg tw">58周岁</span></td><td>每4个月延迟1个月</td></tr>
+<tr><td style="text-align:left;font-weight:600">女工人</td><td>50周岁</td><td><span class="tg tw">55周岁</span></td><td>每2个月延迟1个月</td></tr>
+</tbody></table>
+<div class="note"><b>弹性退休：</b>·<b>提前：</b>满足最低缴费年限可提前最长3年（不低于原法定年龄），需提前3个月书面告知单位<br>·<b>延迟：</b>协商一致可延迟最长3年，需提前1个月书面确定</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#d1fae5">&#128197;</div>养老保险最低缴费年限</div>
+<div class="base-row"><div class="base-item"><div class="bl">2025~2029年</div><div class="bv" style="font-size:16px">15年</div></div><div class="base-item"><div class="bl">2030年起逐年增加</div><div class="bv" style="font-size:16px">每年+6月</div></div><div class="base-item"><div class="bl">2039年及以后</div><div class="bv" style="font-size:16px">20年</div></div></div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 延迟退休速查</div>
+<div class="calc-in"><label>出生年份：</label><input type="number" id="ret-birth" placeholder="如 1985" style="width:100px">
+<select id="ret-gender"><option value="m">男职工</option><option value="fw">女干部</option><option value="fwk">女工人</option></select>
+<button class="btn" onclick="calcRet()">查询</button></div>
+<div id="ret-r"></div></div></div>
+</div></div>
+
+<!-- ========== 年休假 ========== -->
+<div class="detail" id="dt-leave"><div class="ct">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#d1fae5">&#9992;</div>带薪年休假天数</div>
+<table><thead><tr><th>累计工作年限</th><th>年假天数</th><th>说明</th></tr></thead><tbody>
+<tr><td style="font-weight:600">满1年不满10年</td><td><span class="tg te">5天</span></td><td>含不同单位的工作年限</td></tr>
+<tr><td style="font-weight:600">满10年不满20年</td><td><span class="tg te">10天</span></td><td>-</td></tr>
+<tr><td style="font-weight:600">满20年及以上</td><td><span class="tg te">15天</span></td><td>-</td></tr>
+</tbody></table>
+<div class="note"><b>不享受年假：</b>寒暑假天数多于年假的；事假≥20天且不扣工资的；病假累计达规定期限的。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128176;</div>未休年假工资计算</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>法定补偿标准</h4><div class="formula">日工资×未休天数×300%</div><p>含正常工资100%+额外补偿200%</p></div>
+<div class="sc-card"><h4>日工资计算</h4><div class="formula">月工资÷21.75</div><p>前12个月平均工资（不含加班）</p></div>
+<div class="sc-card"><h4>中途离职折算</h4><div class="formula">年假×已过天数÷365</div><p>不足1天部分不支付</p></div>
+</div>
+<div class="calc" style="margin-top:14px"><div class="calc-t">&#129518; 未休年假补偿计算器</div>
+<div class="calc-in"><label>月工资：</label><input type="number" id="lv-sal" placeholder="如 8000" style="width:100px"><label>未休天数：</label><input type="number" id="lv-day" placeholder="如 5" style="width:70px">天<button class="btn" onclick="calcLv()">计算</button></div>
+<div id="lv-r"></div></div></div>
+</div></div>
+
+<!-- ========== 加班与调休 ========== -->
+<div class="detail" id="dt-overtime"><div class="ct">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#9200;</div>加班工资计算标准</div>
+<table><thead><tr><th style="text-align:left">加班类型</th><th>工资倍率</th><th>能否调休代替</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">工作日延长</td><td><span class="tg te">150%</span></td><td><span class="tg tr">不能</span>，必须支付</td></tr>
+<tr><td style="text-align:left;font-weight:600">休息日（周末）</td><td><span class="tg te">200%</span></td><td><span class="tg tf">可以</span>安排补休</td></tr>
+<tr><td style="text-align:left;font-weight:600">法定节假日</td><td><span class="tg tr">300%</span></td><td><span class="tg tr">不能</span>，必须支付</td></tr>
+</tbody></table>
+<div class="sc-grid" style="margin-top:12px">
+<div class="sc-card"><h4>日工资</h4><div class="formula">月工资÷21.75</div></div>
+<div class="sc-card"><h4>小时工资</h4><div class="formula">月工资÷21.75÷8</div></div>
+<div class="sc-card"><h4>月计薪天数</h4><div class="formula">21.75天</div><p>(365-104)÷12</p></div>
+</div>
+<div class="note"><b>加班限制：</b>每日延长≤1小时（特殊≤3小时），每月≤36小时。<b>法定假日全年11天：</b>元旦1+春节3+清明1+五一1+端午1+中秋1+国庆3。</div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 加班工资计算器</div>
+<div class="calc-in"><label>月工资：</label><input type="number" id="ot-sal" placeholder="如 6000" style="width:100px">
+<select id="ot-type"><option value="1.5">工作日(150%)</option><option value="2">休息日(200%)</option><option value="3">法定假日(300%)</option></select>
+<label>时长：</label><input type="number" id="ot-hr" placeholder="如 8" style="width:60px">小时<button class="btn" onclick="calcOt()">计算</button></div>
+<div id="ot-r"></div></div></div>
+</div></div>
+
+<!-- ========== 产假/生育 ========== -->
+<div class="detail" id="dt-maternity"><div class="ct">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fce7f3">&#128118;</div>产假/陪产假/哺乳假（云南省）</div>
+<table><thead><tr><th style="text-align:left">假期类型</th><th>天数</th><th>说明</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">产假（顺产）</td><td><span class="tg te">158天</span></td><td>国家98天+云南省生育假60天</td></tr>
+<tr><td style="text-align:left;font-weight:600">难产/剖宫产</td><td><span class="tg te">+15天</span></td><td>在158天基础上增加</td></tr>
+<tr><td style="text-align:left;font-weight:600">多胞胎</td><td><span class="tg te">每多1个+15天</span></td><td>逐个增加</td></tr>
+<tr><td style="text-align:left;font-weight:600">流产(&lt;4月)</td><td>15天</td><td>-</td></tr>
+<tr><td style="text-align:left;font-weight:600">流产(≥4月)</td><td>42天</td><td>-</td></tr>
+<tr><td style="text-align:left;font-weight:600">陪产假（男方）</td><td><span class="tg te">30天</span></td><td>云南省护理假</td></tr>
+<tr><td style="text-align:left;font-weight:600">哺乳假</td><td>每天1小时</td><td>至婴儿满1周岁</td></tr>
+</tbody></table>
+<div class="note"><b>生育津贴：</b>以单位上年度月均工资为基数×产假天数÷30。津贴高于工资差额归个人，低于工资由单位补足。<b>依据：</b>《云南省人口与计划生育条例》（2022修订）</div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 生育津贴计算器</div>
+<div class="calc-in"><label>单位月均工资：</label><input type="number" id="mt-sal" placeholder="如 7000" style="width:100px"><label>产假天数：</label><input type="number" id="mt-day" value="158" style="width:70px"><button class="btn" onclick="calcMt()">计算</button></div>
+<div id="mt-r"></div></div></div>
+</div></div>
+
+<!-- ========== 试用期 ========== -->
+<div class="detail" id="dt-probation"><div class="ct">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#cffafe">&#128203;</div>试用期期限与工资标准</div>
+<table><thead><tr><th style="text-align:left">合同期限</th><th>试用期上限</th><th>试用期工资</th></tr></thead><tbody>
+<tr><td style="text-align:left">不满3个月（含）</td><td><span class="tg tr">不得约定</span></td><td>-</td></tr>
+<tr><td style="text-align:left">3个月~1年（含）</td><td><span class="tg te">1个月</span></td><td rowspan="3">≥约定工资的80%，且≥最低工资标准</td></tr>
+<tr><td style="text-align:left">1~3年（含）</td><td><span class="tg te">2个月</span></td></tr>
+<tr><td style="text-align:left">3年以上/无固定期限</td><td><span class="tg te">6个月</span></td></tr>
+</tbody></table>
+<div class="note"><b>重要：</b>·同一单位与同一劳动者只能约定一次试用期 ·完成一定任务的合同不得约定 ·试用期含在合同期内 ·试用期不缴社保是违法行为</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128683;</div>试用期解除限制</div>
+<table><thead><tr><th style="text-align:left">解除方</th><th>条件</th><th>补偿</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">单位解除</td><td>必须证明不符合录用条件，有考核标准和证据</td><td>无需支付</td></tr>
+<tr><td style="text-align:left;font-weight:600">劳动者解除</td><td>提前3天通知，无需理由</td><td>-</td></tr>
+<tr><td style="text-align:left;font-weight:600">违法解除</td><td>无法证明不符合录用条件</td><td><span class="tg tr">2N赔偿金</span></td></tr>
+</tbody></table></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 试用期工资最低标准</div>
+<div class="calc-in"><label>约定月工资：</label><input type="number" id="pb-sal" placeholder="如 5000" style="width:100px"><button class="btn" onclick="calcPb()">计算</button></div>
+<div id="pb-r"></div></div></div>
+</div></div>
+
+<div class="ft">
+<p>数据来源：云南省人力资源和社会保障厅·昆明市/玉溪市住房公积金管理中心·劳动合同法</p>
+<p>每日自动检查政策更新·仅供参考·最后校验：<span id="lc">2026-07-30</span></p>
+</div>
+
+<script>
+let city='km';
+const titles={home:['人资工作台','云南省·昆明/玉溪·2025年度'],insurance:['五险一金','缴费基数·比例·计算器'],severance:['经济补偿/赔偿金','N/N+1/2N·计算器'],heat:['高温补贴','云南省标准·发放条件'],retire:['退休政策','法定年龄·延迟退休·速查'],leave:['年休假','天数标准·未休补偿'],overtime:['加班与调休','工资倍率·时长限制'],maternity:['产假/生育','产假·陪产假·生育津贴'],probation:['试用期','期限·工资·解除限制']};
+const app=document.getElementById('app');
+app.className='city-km';
+function sw(c){city=c;app.classList.remove('city-km','city-yx');app.classList.add('city-'+c);document.querySelectorAll('.tab').forEach(t=>{if((c==='km'&&t.textContent.includes('昆明'))||(c==='yx'&&t.textContent.includes('玉溪')))t.classList.add('on');else t.classList.remove('on')})}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.querySelectorAll('div.detail').forEach(d=>d.classList.remove('on'));document.getElementById('dt-'+id).classList.add('on');document.getElementById('pageTitle').textContent=titles[id][0];document.getElementById('pageSub').textContent=titles[id][1];app.classList.add('in-detail');window.scrollTo(0,0)}
+function goHome(){document.querySelectorAll('div.detail').forEach(d=>d.classList.remove('on'));document.getElementById('pg-home').classList.add('on');document.getElementById('pageTitle').textContent=titles.home[0];document.getElementById('pageSub').textContent=titles.home[1];app.classList.remove('in-detail');window.scrollTo(0,0)}
+
+function calcIns(){
+  const s=parseFloat(document.getElementById('ins-sal').value);if(!s||s<=0)return;
+  const mn=4357,mx=21789;let b=Math.min(Math.max(s,mn),mx);
+  const fMin=city==='km'?2070:1920,fMax=city==='km'?32470:27267;let fb=Math.min(Math.max(s,fMin),fMax);
+  const rows=[['养老保险',0.16,0.08,b],['医疗保险(含生育)',0.09,0.02,b],['大病医疗互助',0,0,0,43.58,1],['失业保险',0.007,0.003,b],['工伤(四类)',0.009,0,b]];
+  let h='<table><thead><tr><th style="text-align:left">险种</th><th>单位</th><th>个人</th></tr></thead><tbody>';let te=0,tp=0;
+  rows.forEach(r=>{const e=r[4]!==undefined?r[4]:+(b*r[1]).toFixed(2);const p=r[5]!==undefined?r[5]:+(b*r[2]).toFixed(2);te+=e;tp+=p;h+=`<tr><td style="text-align:left">${r[0]}</td><td>${e.toFixed(2)}</td><td>${p?p.toFixed(2):'-'}</td></tr>`});
+  const fe=+(fb*0.12).toFixed(2),fp=+(fb*0.12).toFixed(2);te+=fe;tp+=fp;
+  h+=`<tr><td style="text-align:left">公积金(12%)</td><td>${fe.toFixed(2)}</td><td>${fp.toFixed(2)}</td></tr>`;
+  h+=`<tr class="tot"><td style="text-align:left">合计</td><td>${te.toFixed(2)}</td><td>${tp.toFixed(2)}</td></tr></tbody></table>`;
+  h+=`<div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div style="background:#f0f9ff;border-radius:8px;padding:8px"><div style="font-size:11px;color:#64748b">单位总成本</div><div style="font-size:18px;font-weight:800;color:#1d4ed8">${te.toFixed(0)}</div></div><div style="background:#fce7f3;border-radius:8px;padding:8px"><div style="font-size:11px;color:#64748b">个人扣款</div><div style="font-size:18px;font-weight:800;color:#be185d">${tp.toFixed(0)}</div></div><div style="background:#f0fdf4;border-radius:8px;padding:8px"><div style="font-size:11px;color:#64748b">到手工资</div><div style="font-size:18px;font-weight:800;color:#059669">${(s-tp).toFixed(0)}</div></div></div>`;
+  document.getElementById('ins-r').innerHTML=h;
+}
+
+function calcSev(){
+  const sal=parseFloat(document.getElementById('sev-sal').value);const yr=parseFloat(document.getElementById('sev-yr').value);const type=document.getElementById('sev-type').value;
+  if(!sal||sal<=0||!yr||yr<=0)return;
+  let n=Math.floor(yr);const f=yr-n;if(f>=0.5)n+=1;else if(f>0)n+=0.5;
+  const limit=7263*3;const base=sal>limit?limit:sal;
+  let comp=0,label='';
+  if(type==='n'){comp=base*n;label='N='+n+'个月'}else if(type==='n1'){comp=base*(n+1);label='N+1='+(n+1)+'个月'}else{comp=base*n*2;label='2N='+(n*2)+'个月'}
+  let note='';if(sal>limit)note=`<div class="note"><b>注意：</b>月工资超社平3倍(${limit.toLocaleString()}元)，按${limit.toLocaleString()}元计算，年限最高12年。</div>`;
+  document.getElementById('sev-r').innerHTML=note+`<div style="text-align:center;padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="font-size:12px;color:#64748b">${label}·月基数${base.toLocaleString()}元</div><div style="font-size:28px;font-weight:800;color:${type==='2n'?'#dc2626':'#1d4ed8'}">${comp.toLocaleString()}元</div></div>`;
+}
+
+function calcRet(){
+  const y=parseInt(document.getElementById('ret-birth').value);const g=document.getElementById('ret-gender').value;
+  if(!y||y<1940||y>2010){document.getElementById('ret-r').innerHTML='<p style="color:#dc2626">请输入有效出生年份</p>';return}
+  let oa,ta,iv;if(g==='m'){oa=60;ta=63;iv=4}else if(g==='fw'){oa=55;ta=58;iv=4}else{oa=50;ta=55;iv=2}
+  const origY=y+oa;if(origY<2025){document.getElementById('ret-r').innerHTML=`<div style="text-align:center;padding:12px;background:#f0fdf4;border-radius:10px"><div style="font-weight:600;color:#059669">已于${origY}年达到法定退休年龄（${oa}周岁）</div></div>`;return}
+  const mf25=(origY-2025)*12;const dm=Math.min(Math.ceil(mf25/iv),(ta-oa)*12);const aa=oa+dm/12;const ay=y+aa;
+  const gl=g==='m'?'男职工':g==='fw'?'女干部':'女工人';
+  document.getElementById('ret-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">原法定退休</div><div style="font-size:16px;font-weight:700">${origY}年(${oa}岁)</div></div><div><div style="font-size:11px;color:#64748b">延迟月数</div><div style="font-size:16px;font-weight:700;color:#d97706">+${dm}个月</div></div><div><div style="font-size:11px;color:#64748b">实际退休</div><div style="font-size:16px;font-weight:700;color:#dc2626">${ay.toFixed(1)}年(${aa.toFixed(1)}岁)</div></div></div><div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">可申请提前最长3年（不早于${origY}年）</div></div>`;
+}
+
+function calcLv(){
+  const sal=parseFloat(document.getElementById('lv-sal').value);const day=parseInt(document.getElementById('lv-day').value);
+  if(!sal||!day)return;const daily=+(sal/21.75).toFixed(2);const total=+(daily*day*3).toFixed(2);
+  document.getElementById('lv-r').innerHTML=`<div style="text-align:center;padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="font-size:12px;color:#64748b">日工资${daily}元×${day}天×300%</div><div style="font-size:24px;font-weight:800;color:#059669">${total.toLocaleString()}元</div></div>`;
+}
+
+function calcOt(){
+  const sal=parseFloat(document.getElementById('ot-sal').value);const rate=parseFloat(document.getElementById('ot-type').value);const hr=parseFloat(document.getElementById('ot-hr').value);
+  if(!sal||!hr)return;const hourly=+(sal/21.75/8).toFixed(2);const total=+(hourly*hr*rate).toFixed(2);
+  const rl={1.5:'工作日150%',2:'休息日200%',3:'法定假日300%'}[rate];
+  document.getElementById('ot-r').innerHTML=`<div style="text-align:center;padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="font-size:12px;color:#64748b">时薪${hourly}元×${hr}h×${rl}</div><div style="font-size:24px;font-weight:800;color:#d97706">${total.toLocaleString()}元</div></div>`;
+}
+
+function calcMt(){
+  const sal=parseFloat(document.getElementById('mt-sal').value);const day=parseInt(document.getElementById('mt-day').value);
+  if(!sal||!day)return;const total=+(sal/30*day).toFixed(2);
+  document.getElementById('mt-r').innerHTML=`<div style="text-align:center;padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="font-size:12px;color:#64748b">${sal.toLocaleString()}元÷30×${day}天</div><div style="font-size:24px;font-weight:800;color:#db2777">${total.toLocaleString()}元</div><div style="font-size:11px;color:#64748b">津贴高于工资差额归个人，低于工资单位补足</div></div>`;
+}
+
+function calcPb(){
+  const sal=parseFloat(document.getElementById('pb-sal').value);if(!sal)return;
+  const m80=+(sal*0.8).toFixed(2);const mw=city==='km'?2070:1920;const actual=Math.max(m80,mw);
+  document.getElementById('pb-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">约定工资80%</div><div style="font-size:16px;font-weight:700">${m80.toLocaleString()}元</div></div><div><div style="font-size:11px;color:#64748b">最低工资</div><div style="font-size:16px;font-weight:700">${mw.toLocaleString()}元</div></div></div><div style="text-align:center;margin-top:10px;padding:10px;background:#cffafe;border-radius:8px"><div style="font-size:12px;color:#64748b">试用期工资不得低于</div><div style="font-size:22px;font-weight:800;color:#0891b2">${actual.toLocaleString()}元/月</div></div></div>`;
+}
+
+document.querySelectorAll('input[type=number]').forEach(i=>i.addEventListener('keypress',e=>{if(e.key==='Enter'){const b=i.closest('.calc').querySelector('.btn');if(b)b.click()}}));
+</script>
+</div>
+</body>
+</html>
