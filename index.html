@@ -136,7 +136,7 @@ tr:hover td{background:#f8fafc}
     <div class="nav-sub-item" data-nav="medical" onclick="go('medical')"><span class="dot"></span>医疗保险</div>
     <div class="nav-sub-item" data-nav="unemployment" onclick="go('unemployment')"><span class="dot"></span>失业保险</div>
     <div class="nav-sub-item" data-nav="injury" onclick="go('injury')"><span class="dot"></span>工伤保险</div>
-    <div class="nav-sub-item" data-nav="birth" onclick="go('birth')"><span class="dot"></span>生育保险</div>
+    <div class="nav-sub-item" data-nav="birth" onclick="go('birth')"><span class="dot"></span>生育保险 / 产假</div>
     <div class="nav-sub-item" data-nav="fund" onclick="go('fund')"><span class="dot"></span>住房公积金</div>
   </div>
   <div class="nav-item" data-nav="severance" onclick="go('severance')"><div class="ico" style="background:rgba(220,38,38,.2)">&#9878;</div><span class="ni-txt">经济补偿 / 赔偿金</span></div>
@@ -144,7 +144,6 @@ tr:hover td{background:#f8fafc}
   <div class="nav-item" data-nav="retire" onclick="go('retire')"><div class="ico" style="background:rgba(124,58,237,.2)">&#128116;</div><span class="ni-txt">退休政策</span></div>
   <div class="nav-item" data-nav="leave" onclick="go('leave')"><div class="ico" style="background:rgba(5,150,105,.2)">&#9992;</div><span class="ni-txt">年休假</span></div>
   <div class="nav-item" data-nav="overtime" onclick="go('overtime')"><div class="ico" style="background:rgba(217,119,6,.2)">&#9200;</div><span class="ni-txt">加班与调休</span></div>
-  <div class="nav-item" data-nav="maternity" onclick="go('maternity')"><div class="ico" style="background:rgba(219,39,119,.2)">&#128118;</div><span class="ni-txt">产假 / 生育</span></div>
   <div class="nav-item" data-nav="probation" onclick="go('probation')"><div class="ico" style="background:rgba(8,145,178,.2)">&#128203;</div><span class="ni-txt">试用期</span></div>
 </div>
 <div class="sidebar-ft">数据更新: 2026-09-11<br>每日自动检查政策更新</div>
@@ -367,10 +366,29 @@ tr:hover td{background:#f8fafc}
 <div class="sc-card"><h4>辅助生殖纳入医保</h4><div class="formula">不设起付线·报销50%</div><p>职工年度限额3,000元、居民1,500元，即时结算</p></div>
 </div></div>
 
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fce7f3">&#128118;</div>产假 / 陪产假 / 哺乳假（云南省）</div>
+<table><thead><tr><th style="text-align:left">假期类型</th><th>天数</th><th>说明</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">产假（顺产）</td><td><span class="tg te">158天</span></td><td>国家98天+云南省生育假60天</td></tr>
+<tr><td style="text-align:left;font-weight:600">难产/剖宫产</td><td><span class="tg te">+15天</span></td><td>在158天基础上增加</td></tr>
+<tr><td style="text-align:left;font-weight:600">多胞胎</td><td><span class="tg te">每多1个+15天</span></td><td>逐个增加</td></tr>
+<tr><td style="text-align:left;font-weight:600">流产(&lt;4月)</td><td>15天</td><td>-</td></tr>
+<tr><td style="text-align:left;font-weight:600">流产(≥4月)</td><td>42天</td><td>-</td></tr>
+<tr><td style="text-align:left;font-weight:600">陪产假（男方）</td><td><span class="tg te">30天</span></td><td>云南省护理假</td></tr>
+<tr><td style="text-align:left;font-weight:600">哺乳假</td><td>每天1小时</td><td>至婴儿满1周岁</td></tr>
+<tr><td style="text-align:left;font-weight:600">育儿假</td><td><span class="tg te">每年10天</span></td><td>子女3周岁前，夫妻双方各享</td></tr>
+</tbody></table>
+<div class="note"><b>生育津贴：</b>以单位上年度月均工资为基数×产假天数÷30。津贴高于工资差额归个人，低于工资由单位补足。<b>依据：</b>《云南省人口与计划生育条例》（2022修订）</div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 生育津贴计算器</div>
+<div class="calc-in"><label>单位月均工资：</label><input type="number" id="mt-sal" placeholder="如 7000" style="width:100px"><label>产假天数：</label><input type="number" id="mt-day" value="158" style="width:70px"><button class="btn" onclick="calcMt()">计算</button></div>
+<div id="mt-r"></div></div></div>
+
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
 <div class="sc-grid">
 <div class="sc-card"><h4>云南生育医保新政</h4><p>省医保局等四部门联合印发<br>2026年7月10日起施行</p></div>
-<div class="sc-card"><h4>产假天数</h4><p>云南：产假158天、男方护理假30天<br>详见「产假/生育」模块</p></div>
+<div class="sc-card"><h4>女职工劳动保护特别规定</h4><p>国务院令第619号（2012年）<br>基础产假98天（含产前15天）<br>难产+15天，多胞胎每多1个+15天</p></div>
+<div class="sc-card"><h4>云南省人口与计划生育条例</h4><p>2022年1月17日第三次修正<br>生育假延长60天（合计158天）<br>男方护理假30天·育儿假每年10天</p></div>
+<div class="sc-card"><h4>生育津贴</h4><p>《社会保险法》第56条<br>津贴=单位上年度月均工资×产假天数÷30<br>高于工资差额归个人，低于工资单位补足</p></div>
 <div class="sc-card"><h4>个人账户共济</h4><p>生育医疗费个人负担部分<br>可用医保个人账户（含近亲属共济）支付</p></div>
 </div></div>
 </div>
@@ -552,32 +570,6 @@ tr:hover td{background:#f8fafc}
 </div></div>
 </div>
 
-<!-- ========== 产假/生育 ========== -->
-<div class="panel" id="pn-maternity">
-<div class="sec"><div class="sec-t"><div class="icon" style="background:#fce7f3">&#128118;</div>产假/陪产假/哺乳假（云南省）</div>
-<table><thead><tr><th style="text-align:left">假期类型</th><th>天数</th><th>说明</th></tr></thead><tbody>
-<tr><td style="text-align:left;font-weight:600">产假（顺产）</td><td><span class="tg te">158天</span></td><td>国家98天+云南省生育假60天</td></tr>
-<tr><td style="text-align:left;font-weight:600">难产/剖宫产</td><td><span class="tg te">+15天</span></td><td>在158天基础上增加</td></tr>
-<tr><td style="text-align:left;font-weight:600">多胞胎</td><td><span class="tg te">每多1个+15天</span></td><td>逐个增加</td></tr>
-<tr><td style="text-align:left;font-weight:600">流产(&lt;4月)</td><td>15天</td><td>-</td></tr>
-<tr><td style="text-align:left;font-weight:600">流产(≥4月)</td><td>42天</td><td>-</td></tr>
-<tr><td style="text-align:left;font-weight:600">陪产假（男方）</td><td><span class="tg te">30天</span></td><td>云南省护理假</td></tr>
-<tr><td style="text-align:left;font-weight:600">哺乳假</td><td>每天1小时</td><td>至婴儿满1周岁</td></tr>
-</tbody></table>
-<div class="note"><b>生育津贴：</b>以单位上年度月均工资为基数×产假天数÷30。津贴高于工资差额归个人，低于工资由单位补足。<b>依据：</b>《云南省人口与计划生育条例》（2022修订）</div></div>
-
-<div class="sec"><div class="calc"><div class="calc-t">&#129518; 生育津贴计算器</div>
-<div class="calc-in"><label>单位月均工资：</label><input type="number" id="mt-sal" placeholder="如 7000" style="width:100px"><label>产假天数：</label><input type="number" id="mt-day" value="158" style="width:70px"><button class="btn" onclick="calcMt()">计算</button></div>
-<div id="mt-r"></div></div></div>
-
-<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
-<div class="sc-grid">
-<div class="sc-card"><h4>女职工劳动保护特别规定</h4><p>国务院令第619号（2012年）<br>基础产假98天（含产前15天）<br>难产+15天，多胞胎每多1个+15天</p></div>
-<div class="sc-card"><h4>云南省人口与计划生育条例</h4><p>2022年1月17日第三次修正<br>生育假延长60天（合计158天）<br>男方护理假30天<br>育儿假：子女3岁前每年10天</p></div>
-<div class="sc-card"><h4>生育津贴</h4><p>《社会保险法》第56条<br>津贴=单位上年度月均工资×产假天数÷30<br>高于工资差额归个人，低于工资单位补足</p></div>
-</div></div>
-</div>
-
 <!-- ========== 试用期 ========== -->
 <div class="panel" id="pn-probation">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#cffafe">&#128203;</div>试用期期限与工资标准</div>
@@ -624,14 +616,13 @@ const meta={
   medical:{title:'医疗保险',sub:'报销比例·慢特病·职工/居民对比',ico:'&#127973;',bg:'#cffafe'},
   unemployment:{title:'失业保险',sub:'失业金标准·领取条件期限',ico:'&#128188;',bg:'#fef3c7'},
   injury:{title:'工伤保险',sub:'伤残待遇·工亡标准·认定',ico:'&#9888;',bg:'#fee2e2'},
-  birth:{title:'生育保险',sub:'生育医疗·津贴·辅助生殖',ico:'&#128118;',bg:'#fce7f3'},
+  birth:{title:'生育保险 / 产假',sub:'生育医疗·津贴·产假·陪产假·育儿假',ico:'&#128118;',bg:'#fce7f3'},
   fund:{title:'住房公积金',sub:'缴存·贷款·月供计算·提取',ico:'&#127968;',bg:'#d1fae5'},
   severance:{title:'经济补偿 / 赔偿金',sub:'N/N+1/2N·计算器',ico:'&#9878;',bg:'#fee2e2'},
   heat:{title:'高温补贴',sub:'云南省标准·发放条件',ico:'&#9728;',bg:'#fff7ed'},
   retire:{title:'退休政策',sub:'法定年龄·延迟退休·速查',ico:'&#128116;',bg:'#ede9fe'},
   leave:{title:'年休假',sub:'天数标准·未休补偿',ico:'&#9992;',bg:'#d1fae5'},
   overtime:{title:'加班与调休',sub:'工资倍率·时长限制',ico:'&#9200;',bg:'#fef3c7'},
-  maternity:{title:'产假 / 生育',sub:'产假·陪产假·生育津贴',ico:'&#128118;',bg:'#fce7f3'},
   probation:{title:'试用期',sub:'期限·工资·解除限制',ico:'&#128203;',bg:'#cffafe'}
 };
 const SUB_IDS=['pension','medical','unemployment','injury','birth','fund'];
