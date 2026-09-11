@@ -26,6 +26,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 .nav-item.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700;box-shadow:inset 3px 0 0 #fff}
 .nav-item .ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .nav-item .ni-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-item .arrow{margin-left:auto;font-size:9px;opacity:.5;transition:.2s}
+.nav-item .arrow.open{transform:rotate(90deg)}
+
+/* 险种子导航 */
+.nav-sub{display:none;padding:0 10px 4px 26px}
+.nav-sub.open{display:block}
+.nav-sub-item{display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:2px;border-radius:8px;cursor:pointer;transition:.2s;color:rgba(255,255,255,.6);font-size:12px;font-weight:500}
+.nav-sub-item:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav-sub-item.on{background:rgba(255,255,255,.18);color:#fff;font-weight:700}
+.nav-sub-item .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.4);flex-shrink:0}
+.nav-sub-item.on .dot{background:#7dd3fc}
 .sidebar-ft{padding:10px 14px;border-top:1px solid rgba(255,255,255,.1);font-size:10px;color:rgba(255,255,255,.45);text-align:center;line-height:1.5}
 
 /* ===== 右侧内容区 ===== */
@@ -119,7 +130,15 @@ tr:hover td{background:#f8fafc}
   <div class="city-btn" onclick="sw('yx')">玉溪市</div>
 </div>
 <div class="nav-list">
-  <div class="nav-item on" data-nav="insurance" onclick="go('insurance')"><div class="ico" style="background:rgba(59,130,246,.25)">&#128202;</div><span class="ni-txt">五险一金</span></div>
+  <div class="nav-item on" data-nav="insurance" onclick="go('insurance',1)"><div class="ico" style="background:rgba(59,130,246,.25)">&#128202;</div><span class="ni-txt">五险一金</span><span class="arrow open" id="ins-arrow">&#9654;</span></div>
+  <div class="nav-sub open" id="nav-sub-insurance">
+    <div class="nav-sub-item" data-nav="pension" onclick="go('pension')"><span class="dot"></span>养老保险</div>
+    <div class="nav-sub-item" data-nav="medical" onclick="go('medical')"><span class="dot"></span>医疗保险</div>
+    <div class="nav-sub-item" data-nav="unemployment" onclick="go('unemployment')"><span class="dot"></span>失业保险</div>
+    <div class="nav-sub-item" data-nav="injury" onclick="go('injury')"><span class="dot"></span>工伤保险</div>
+    <div class="nav-sub-item" data-nav="birth" onclick="go('birth')"><span class="dot"></span>生育保险</div>
+    <div class="nav-sub-item" data-nav="fund" onclick="go('fund')"><span class="dot"></span>住房公积金</div>
+  </div>
   <div class="nav-item" data-nav="severance" onclick="go('severance')"><div class="ico" style="background:rgba(220,38,38,.2)">&#9878;</div><span class="ni-txt">经济补偿 / 赔偿金</span></div>
   <div class="nav-item" data-nav="heat" onclick="go('heat')"><div class="ico" style="background:rgba(234,88,12,.2)">&#9728;</div><span class="ni-txt">高温补贴</span></div>
   <div class="nav-item" data-nav="retire" onclick="go('retire')"><div class="ico" style="background:rgba(124,58,237,.2)">&#128116;</div><span class="ni-txt">退休政策</span></div>
@@ -128,7 +147,7 @@ tr:hover td{background:#f8fafc}
   <div class="nav-item" data-nav="maternity" onclick="go('maternity')"><div class="ico" style="background:rgba(219,39,119,.2)">&#128118;</div><span class="ni-txt">产假 / 生育</span></div>
   <div class="nav-item" data-nav="probation" onclick="go('probation')"><div class="ico" style="background:rgba(8,145,178,.2)">&#128203;</div><span class="ni-txt">试用期</span></div>
 </div>
-<div class="sidebar-ft">数据更新: 2026-09-07<br>每日自动检查政策更新</div>
+<div class="sidebar-ft">数据更新: 2026-09-11<br>每日自动检查政策更新</div>
 </aside>
 
 <!-- ===== 右侧内容区 ===== -->
@@ -189,6 +208,209 @@ tr:hover td{background:#f8fafc}
 <div class="sc-card"><h4>社会保险法</h4><p>《中华人民共和国社会保险法》<br>主席令第25号（2010年通过，2018年修正）<br>涵盖养老、医疗、工伤、失业、生育五险</p></div>
 <div class="sc-card"><h4>住房公积金管理条例</h4><p>国务院令第262号（1999年发布，2019年第二次修订）<br>缴存比例5%~12%</p></div>
 <div class="sc-card"><h4>云南省社保基数通知</h4><p>2026年度全省统一缴费基数基准7,339元/月<br>2026年8月29日省人社厅等四部门联合公布<br>上限22,017元、下限4,403元</p></div>
+</div></div>
+</div>
+
+<!-- ========== 养老保险 ========== -->
+<div class="panel" id="pn-pension">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#dbeafe">&#128176;</div>养老保险缴费标准（2026年度）</div>
+<div class="base-row"><div class="base-item"><div class="bl">单位缴费比例</div><div class="bv">16%</div></div><div class="base-item"><div class="bl">个人缴费比例</div><div class="bv">8%</div></div><div class="base-item"><div class="bl">缴费基数范围</div><div class="bv" style="font-size:15px">4,403~22,017<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">个人缴费去向</div><div class="bv" style="font-size:15px">全额入个人账户</div></div></div>
+<div class="note info"><b>个人账户：</b>个人缴费8%全部计入个人账户，单位缴费进入统筹基金。个人账户每年按国家公布的记账利率计息。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#129518;</div>养老金构成与计算公式</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>基础养老金</h4><div class="formula">(计发基数+基数×缴费指数)÷2×年限×1%</div><p>缴费指数=本人历年缴费基数÷社平工资（0.6~3）</p></div>
+<div class="sc-card"><h4>个人账户养老金</h4><div class="formula">个人账户储存额÷计发月数</div><p>计发月数：50岁195、55岁170、60岁139个月</p></div>
+<div class="sc-card"><h4>过渡性养老金</h4><div class="formula">基数×视同指数×视同年限×过渡系数</div><p>仅1995年底前有视同缴费年限（含军龄）人员适用</p></div>
+</div>
+<div class="note info"><b>计发基数：</b>云南2024年度计发基数为8,183元/月，2025年度基数公布前新退休人员暂按上年基数预发、后补差。<b>多缴多得：</b>年限越长、基数越高，养老金越高。</div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 养老金测算器（仅供参考）</div>
+<div class="calc-in"><label>缴费年限：</label><input type="number" id="pen-yr" placeholder="如 30" style="width:70px">年
+<label>缴费指数：</label><input type="number" id="pen-idx" value="0.6" step="0.1" min="0.6" max="3" style="width:70px">
+<label>个人账户额：</label><input type="number" id="pen-acct" placeholder="如 80000" style="width:100px">元
+<select id="pen-age"><option value="139">60岁退休</option><option value="170">55岁退休</option><option value="195">50岁退休</option></select>
+<button class="btn" onclick="calcPen()">测算</button></div>
+<div id="pen-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128269;</div>个人账户与待遇查询渠道</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>电子社保卡</h4><p>支付宝/微信搜索「电子社保卡」<br>可查个人账户余额、缴费明细</p></div>
+<div class="sc-card"><h4>掌上12333 / 云南人社</h4><p>人社部官方APP /「云南人社」APP<br>社保查询、待遇资格认证</p></div>
+<div class="sc-card"><h4>线下渠道</h4><p>各级社保经办机构窗口<br>自助一体机（刷身份证查询）</p></div>
+</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#d1fae5">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>社会保险法 第15-16条</h4><p>基本养老金组成<br>法定退休年龄+累计缴费满15年按月领取</p></div>
+<div class="sc-card"><h4>最低缴费年限</h4><p>2030年起每年提高6个月<br>2039年及以后达到20年</p></div>
+<div class="sc-card"><h4>个人养老金（第三支柱）</h4><p>自愿参加，年缴存上限12,000元<br>税收优惠，退休后领取</p></div>
+</div></div>
+</div>
+
+<!-- ========== 医疗保险 ========== -->
+<div class="panel" id="pn-medical">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#cffafe">&#127973;</div>职工医保 vs 居民医保 · 住院待遇对比</div>
+<div style="overflow-x:auto"><table><thead><tr><th style="text-align:left">项目</th><th>职工(在职)</th><th>职工(退休)</th><th>居民医保</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">起付线(一/二/三级)</td><td colspan="2">200 / 550 / 880 元</td><td>200 / 550 / 880 元</td></tr>
+<tr><td style="text-align:left;font-weight:600">报销比例(一级)</td><td><span class="tg te">91%</span></td><td><span class="tg tf">95%</span></td><td><span class="tg tw">85%</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">报销比例(二级)</td><td><span class="tg te">88%</span></td><td><span class="tg tf">92%</span></td><td><span class="tg tw">75%</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">报销比例(三级)</td><td><span class="tg te">85%</span></td><td><span class="tg tf">89%</span></td><td><span class="tg tw">60%</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">基本医保年度封顶</td><td colspan="2">8万元</td><td>6万元</td></tr>
+<tr><td style="text-align:left;font-weight:600">大额/大病保障</td><td colspan="2">大额补助42万(90%)<br>合计50万元</td><td>大病最高11.58万<br>(自付超1.2万起付，分段最高90%)<br>合计17.58万元</td></tr>
+</tbody></table></div>
+<div class="note info"><b>职工vs居民：</b>职工医保按月缴费、待遇更高，缴满规定年限（男30年/女25年左右）退休后免缴享受终身；居民医保按年缴费，交一年保一年。条件允许优先职工医保。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128138;</div>普通门诊待遇</div>
+<table><thead><tr><th style="text-align:left">项目</th><th>职工医保（在职/退休）</th><th>居民医保</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">起付线</td><td>一级20 / 二级40 / 三级60 元</td><td>无（县域内定点机构）</td></tr>
+<tr><td style="text-align:left;font-weight:600">报销比例</td><td>一级60/70% · 二级55/65% · 三级50/60%</td><td>一级及以下50% · 二三级25%</td></tr>
+<tr><td style="text-align:left;font-weight:600">年度限额</td><td>6,000元（超出按住院待遇）</td><td>400元</td></tr>
+</tbody></table>
+<div class="note info"><b>门诊共济：</b>职工医保个人账户可绑定近亲属共济使用，用于支付其就医自付费用、药店购药。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fce7f3">&#129440;</div>门诊慢特病待遇（慢性病23种 / 特殊病24种）</div>
+<div style="overflow-x:auto"><table><thead><tr><th style="text-align:left">类别</th><th>职工医保</th><th>居民医保</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">门诊慢性病<br><span style="font-size:10px;color:#94a3b8">高血压、糖尿病等</span></td><td>起付300元/年，报<span class="tg te">80%</span><br>单病种限额2,000元，年度最高5,000元</td><td>无起付线，报<span class="tg tw">20%</span><br>单病种限额2,000元，年度最高5,000元</td></tr>
+<tr><td style="text-align:left;font-weight:600">特殊病(肾衰/重精)</td><td>无起付线，报<span class="tg tf">90%</span></td><td>无起付线，报<span class="tg tf">90%</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">特殊病(其他)<br><span style="font-size:10px;color:#94a3b8">恶性肿瘤、器官移植等</span></td><td>按住院待遇，起付880元<br>(与住院分别计算)</td><td>起付1,200元，报<span class="tg te">70%</span></td></tr>
+</tbody></table></div>
+<div class="note"><b>办理：</b>持二级及以上医院诊断证明，到医院医保窗口或政务大厅办理备案，即时办结。多病种每增1个加1,000元限额。职工慢性病由统筹基金单独支付，不与年度限额合并。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>职工医保门诊共济</h4><p>在职/退休门诊待遇差异化<br>个人账户家庭共济</p></div>
+<div class="sc-card"><h4>云医保〔2023〕105号</h4><p>新增5种门诊特殊病<br>慢病/特病病种目录调整</p></div>
+<div class="sc-card"><h4>异地就医</h4><p>备案后直接结算<br>「国家医保服务平台」APP办理</p></div>
+</div></div>
+</div>
+
+<!-- ========== 失业保险 ========== -->
+<div class="panel" id="pn-unemployment">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128188;</div>失业保险金标准</div>
+<div class="base-row"><div class="base-item"><div class="bl">缴费比例(单位+个人)</div><div class="bv">0.7%+0.3%</div></div><div class="base-item"><div class="bl">失业金月标准</div><div class="bv">2,043<span class="u"> 元/月</span></div></div><div class="base-item"><div class="bl">最长领取</div><div class="bv">24<span class="u"> 个月</span></div></div></div>
+<div class="note info"><b>计算方式：</b>全省统一按一类地区最低工资的90%执行 = 2,270×90% ≈ 2,043元/月，随最低工资调整（云人社发〔2026〕9号）。领取期间由失业保险基金代缴职工医保费。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#dbeafe">&#128197;</div>缴费年限与领取期限对照</div>
+<table><thead><tr><th>累计缴费年限</th><th>可领取月数</th><th>累计缴费年限</th><th>可领取月数</th></tr></thead><tbody>
+<tr><td>满1年</td><td><span class="tg te">2个月</span></td><td>满4年</td><td><span class="tg te">10个月</span></td></tr>
+<tr><td>满2年</td><td><span class="tg te">4个月</span></td><td>满5年</td><td><span class="tg te">13个月</span></td></tr>
+<tr><td>满3年</td><td><span class="tg te">7个月</span></td><td>满6年及以上</td><td>15个月起，每满1年+1个月</td></tr>
+</tbody></table>
+<div class="note"><b>上限：</b>单次最长24个月；重新就业参保后再失业，剩余期限可合并计算（仍不超24个月）。<b>大龄人员：</b>距法定退休年龄不足1年领金期满未就业的，可继续发放至退休。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fee2e2">&#9989;</div>领取条件与停止情形</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>领取条件（同时满足）</h4><p>·失业前单位和本人已缴费满1年<br>·非因本人意愿中断就业<br>·已办理失业登记并有求职要求</p></div>
+<div class="sc-card"><h4>停止领取情形</h4><p>·重新就业 ·应征服兵役<br>·移居境外 ·享受养老保险待遇<br>·无正当理由拒不接受工作介绍/培训</p></div>
+</div>
+<div class="note info"><b>申领方式：</b>凭身份证或社保卡到最后参保地经办机构申领，可转回户籍地；「掌上12333」「云南人社」APP可线上办理。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>社会保险法 第44-46条</h4><p>失业保险金领取条件与期限<br>领取期间代缴医保等待遇</p></div>
+<div class="sc-card"><h4>失业保险条例</h4><p>国务院令第258号<br>缴费年限对应领取期限</p></div>
+<div class="sc-card"><h4>云南稳岗政策</h4><p>阶段性降费率1%延续执行<br>失业保险援企稳岗返还</p></div>
+</div></div>
+</div>
+
+<!-- ========== 工伤保险 ========== -->
+<div class="panel" id="pn-injury">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fee2e2">&#9888;</div>缴费与停工留薪</div>
+<div class="base-row"><div class="base-item"><div class="bl">单位费率(行业差别)</div><div class="bv" style="font-size:15px">0.2%~1.9%</div></div><div class="base-item"><div class="bl">个人缴费</div><div class="bv">不缴纳</div></div><div class="base-item"><div class="bl">停工留薪期</div><div class="bv" style="font-size:15px">≤12个月<span class="u"> 可延12</span></div></div><div class="base-item"><div class="bl">住院伙食补助</div><div class="bv">34<span class="u"> 元/日</span></div></div></div>
+<div class="note"><b>停工留薪期：</b>原工资福利待遇不变，由单位按月支付；伤情严重需延长的经鉴定确认可再延长不超过12个月。伙食补助34元/日为云南2026年度标准（2026年9月1日起）。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128200;</div>伤残待遇标准（按本人工资计）</div>
+<div style="overflow-x:auto"><table><thead><tr><th>伤残等级</th><th>一次性伤残补助金</th><th>按月伤残津贴</th></tr></thead><tbody>
+<tr><td>一级</td><td><span class="tg te">27个月</span></td><td><span class="tg te">90%</span></td></tr>
+<tr><td>二级</td><td><span class="tg te">25个月</span></td><td><span class="tg te">85%</span></td></tr>
+<tr><td>三级</td><td><span class="tg te">23个月</span></td><td><span class="tg te">80%</span></td></tr>
+<tr><td>四级</td><td><span class="tg te">21个月</span></td><td><span class="tg te">75%</span></td></tr>
+<tr><td>五级</td><td><span class="tg te">18个月</span></td><td>难以安排工作由单位发70%</td></tr>
+<tr><td>六级</td><td><span class="tg te">16个月</span></td><td>难以安排工作由单位发60%</td></tr>
+<tr><td>七级</td><td><span class="tg te">13个月</span></td><td rowspan="4">-</td></tr>
+<tr><td>八级</td><td><span class="tg te">11个月</span></td></tr>
+<tr><td>九级</td><td><span class="tg te">9个月</span></td></tr>
+<tr><td>十级</td><td><span class="tg te">7个月</span></td></tr>
+</tbody></table></div>
+<div class="note"><b>5-10级离职时：</b>另享一次性工伤医疗补助金（基金支付）+一次性伤残就业补助金（单位支付），按云南规定以统筹地区上年度职工月平均工资为基数。<b>1-4级：</b>保留劳动关系退出岗位，津贴由基金支付至退休。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fee2e2">&#128129;</div>工亡待遇（2026年度）</div>
+<div class="base-row"><div class="base-item"><div class="bl">一次性工亡补助金</div><div class="bv" style="font-size:16px">1,130,040<span class="u"> 元</span></div></div><div class="base-item"><div class="bl">丧葬补助金</div><div class="bv" style="font-size:16px">6个月社平工资</div></div><div class="base-item"><div class="bl">供养亲属抚恤金</div><div class="bv" style="font-size:16px">配偶40%·其他30%</div></div></div>
+<div class="note"><b>工亡补助金：</b>全国统一 = 上年度全国城镇居民人均可支配收入×20倍，2026年度为1,130,040元。<b>抚恤金：</b>按本人工资比例发给符合条件的供养亲属（孤寡老人及孤儿各加10%，合计不超本人工资）。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>工伤保险条例</h4><p>国务院令第586号（2010年修订）<br>伤残、工亡待遇标准</p></div>
+<div class="sc-card"><h4>工伤认定时限</h4><p>单位30日内申报<br>个人及近亲属1年内可申请</p></div>
+<div class="sc-card"><h4>劳动能力鉴定</h4><p>伤情稳定后申请<br>市级劳鉴委作出，不服可复查/再鉴定</p></div>
+</div></div>
+</div>
+
+<!-- ========== 生育保险 ========== -->
+<div class="panel" id="pn-birth">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fce7f3">&#128118;</div>生育医疗保障（云南新政 · 2026年7月10日起施行）</div>
+<div class="base-row"><div class="base-item"><div class="bl">产前检查(职工)</div><div class="bv">6,000<span class="u"> 元限额</span></div></div><div class="base-item"><div class="bl">产前检查(居民)</div><div class="bv">1,000<span class="u"> 元/年·50%</span></div></div><div class="base-item"><div class="bl">生育津贴</div><div class="bv" style="font-size:15px">月均工资×天数÷30</div></div></div>
+<div class="note info"><b>新政要点：</b>职工产前检查限额由1,000元提高至6,000元；居民按50%报销、限额提高至每年1,000元。灵活就业人员等参加职工医保的同步纳入生育保障，从职工医保费率中划出0.5个百分点作为生育保险费率，不额外增加缴费。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#127973;</div>住院分娩（单病种包干 · 包内无自付）</div>
+<table><thead><tr><th style="text-align:left">机构级别</th><th>顺产服务包</th><th>剖宫产服务包</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">三级医疗机构</td><td><span class="tg te">4,000元</span></td><td><span class="tg te">6,000元</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">二级及以下</td><td><span class="tg te">3,500元</span></td><td><span class="tg te">4,500元</span></td></tr>
+</tbody></table>
+<div class="note"><b>服务包范围：</b>含产前彩超、血常规、胎心监测、分娩镇痛、床位、产程管理、药品耗材及部分中医项目，包内个人不承担费用。危急重症抢救、妊娠并发症/合并症等特殊情况按普通住院待遇报销。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#d1fae5">&#129518;</div>生育津贴与辅助生殖</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>生育津贴（单位职工）</h4><div class="formula">单位上年度月均工资×产假天数÷30</div><p>津贴高于工资的差额归个人，低于工资的由单位补足</p></div>
+<div class="sc-card"><h4>灵活就业人员津贴</h4><div class="formula">一类最低工资÷30×98天</div><p>缴费满12个月可享津贴；满6个月不满12个月仅享生育医疗费</p></div>
+<div class="sc-card"><h4>辅助生殖纳入医保</h4><div class="formula">不设起付线·报销50%</div><p>职工年度限额3,000元、居民1,500元，即时结算</p></div>
+</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>云南生育医保新政</h4><p>省医保局等四部门联合印发<br>2026年7月10日起施行</p></div>
+<div class="sc-card"><h4>产假天数</h4><p>云南：产假158天、男方护理假30天<br>详见「产假/生育」模块</p></div>
+<div class="sc-card"><h4>个人账户共济</h4><p>生育医疗费个人负担部分<br>可用医保个人账户（含近亲属共济）支付</p></div>
+</div></div>
+</div>
+
+<!-- ========== 住房公积金 ========== -->
+<div class="panel" id="pn-fund">
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#d1fae5">&#127968;</div>缴存标准（2026年度）</div>
+<div class="base-row"><div class="base-item"><div class="bl">缴存比例</div><div class="bv">5%~12%</div></div><div class="base-item"><div class="bl">基数上限(昆明)</div><div class="bv">32,543<span class="u"> 元</span></div></div><div class="base-item"><div class="bl">基数上限(玉溪·暂)</div><div class="bv">27,813<span class="u"> 元</span></div></div><div class="base-item"><div class="bl">下限(昆明一类/玉溪二类)</div><div class="bv" style="font-size:15px">2,270 / 2,120<span class="u"> 元</span></div></div></div>
+<div class="note info"><b>缴存规则：</b>单位与职工比例须一致；月缴存额=基数×比例。公积金免征个税，单位与个人缴存部分均归职工个人所有。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#127976;</div>贷款政策（昆明 · 2026年4月7日起）</div>
+<table><thead><tr><th style="text-align:left">家庭类型</th><th>单缴存家庭</th><th>双缴存家庭</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600">基础额度</td><td><span class="tg te">70万元</span></td><td><span class="tg te">100万元</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">多子女家庭(+30%)</td><td><span class="tg te">91万元</span></td><td><span class="tg te">130万元</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">购现房/绿色住宅(+20%)</td><td><span class="tg te">84万元</span></td><td><span class="tg te">120万元</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">多子女+上述住房(+50%)</td><td><span class="tg te">105万元</span></td><td><span class="tg te">150万元</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">高层次人才(+50%)</td><td colspan="2">105万 / 150万（兴滇惠才卡、春城惠才卡持卡人）</td></tr>
+</tbody></table>
+<div class="note"><b>利率：</b>首套1-5年2.1%、6-30年2.6%；二套1-5年2.525%、6-30年3.075%。<b>首付：</b>首套商品房20%（保障房15%）、二套20%。<b>期限：</b>最长30年。玉溪额度以当地公积金中心规定为准。</div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 公积金贷款月供计算器（等额本息）</div>
+<div class="calc-in"><label>贷款总额：</label><input type="number" id="hf-amt" placeholder="如 100" style="width:80px">万元
+<label>贷款年限：</label><input type="number" id="hf-yr" placeholder="如 30" style="width:70px">年
+<select id="hf-rate"><option value="2.6">首套·6-30年 2.6%</option><option value="2.1">首套·1-5年 2.1%</option><option value="3.075">二套·6-30年 3.075%</option><option value="2.525">二套·1-5年 2.525%</option></select>
+<button class="btn" onclick="calcHf()">计算</button></div>
+<div id="hf-r"></div></div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128176;</div>提取情形</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>住房消费类</h4><p>·购买/建造/翻建/大修自住住房<br>·偿还购房贷款本息<br>·无房职工租房（限额内提取）</p></div>
+<div class="sc-card"><h4>销户提取类</h4><p>·离退休<br>·完全丧失劳动能力并解除合同<br>·出境定居 ·与单位终止劳动关系</p></div>
+<div class="sc-card"><h4>其他情形</h4><p>·既有住宅加装电梯<br>·重大疾病/突发事件（部分地区支持）</p></div>
+</div>
+<div class="note info"><b>查询渠道：</b>昆明公积金APP/微信小程序、「玉溪公积金」微信公众号、各地公积金中心网厅，或拨打12329热线。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#d1fae5">&#128214;</div>政策法规依据</div>
+<div class="sc-grid">
+<div class="sc-card"><h4>住房公积金管理条例</h4><p>国务院令第262号（2019年修订）<br>缴存、提取、贷款基本规则</p></div>
+<div class="sc-card"><h4>昆明贷款新政</h4><p>2026年4月7日起执行，有效期一年<br>额度上浮与认定放宽</p></div>
+<div class="sc-card"><h4>商转公/组合贷</h4><p>昆明支持商转公贷款及组合贷款<br>具体条件咨询当地公积金中心</p></div>
 </div></div>
 </div>
 
@@ -388,7 +610,7 @@ tr:hover td{background:#f8fafc}
 
 <div class="ft">
 <p>数据来源：云南省人力资源和社会保障厅·昆明市/玉溪市住房公积金管理中心·劳动合同法</p>
-<p>每日自动检查政策更新·仅供参考·最后校验：<span id="lc">2026-09-07</span></p>
+<p>每日自动检查政策更新·仅供参考·最后校验：<span id="lc">2026-09-11</span></p>
 </div>
 </div>
 </div><!-- /main -->
@@ -398,6 +620,12 @@ tr:hover td{background:#f8fafc}
 let city='km';
 const meta={
   insurance:{title:'五险一金',sub:'缴费基数·比例·计算器',ico:'&#128202;',bg:'#dbeafe'},
+  pension:{title:'养老保险',sub:'缴费·养老金构成与测算',ico:'&#128176;',bg:'#dbeafe'},
+  medical:{title:'医疗保险',sub:'报销比例·慢特病·职工/居民对比',ico:'&#127973;',bg:'#cffafe'},
+  unemployment:{title:'失业保险',sub:'失业金标准·领取条件期限',ico:'&#128188;',bg:'#fef3c7'},
+  injury:{title:'工伤保险',sub:'伤残待遇·工亡标准·认定',ico:'&#9888;',bg:'#fee2e2'},
+  birth:{title:'生育保险',sub:'生育医疗·津贴·辅助生殖',ico:'&#128118;',bg:'#fce7f3'},
+  fund:{title:'住房公积金',sub:'缴存·贷款·月供计算·提取',ico:'&#127968;',bg:'#d1fae5'},
   severance:{title:'经济补偿 / 赔偿金',sub:'N/N+1/2N·计算器',ico:'&#9878;',bg:'#fee2e2'},
   heat:{title:'高温补贴',sub:'云南省标准·发放条件',ico:'&#9728;',bg:'#fff7ed'},
   retire:{title:'退休政策',sub:'法定年龄·延迟退休·速查',ico:'&#128116;',bg:'#ede9fe'},
@@ -406,6 +634,7 @@ const meta={
   maternity:{title:'产假 / 生育',sub:'产假·陪产假·生育津贴',ico:'&#128118;',bg:'#fce7f3'},
   probation:{title:'试用期',sub:'期限·工资·解除限制',ico:'&#128203;',bg:'#cffafe'}
 };
+const SUB_IDS=['pension','medical','unemployment','injury','birth','fund'];
 const app=document.getElementById('app');
 
 function sw(c){
@@ -418,11 +647,25 @@ function sw(c){
   });
 }
 
-function go(id){
+function go(id,isParent){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.getElementById('pn-'+id).classList.add('on');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('on'));
-  document.querySelector('[data-nav="'+id+'"]').classList.add('on');
+  document.querySelectorAll('.nav-sub-item').forEach(s=>s.classList.remove('on'));
+  const sub=document.getElementById('nav-sub-insurance'),arrow=document.getElementById('ins-arrow');
+  if(SUB_IDS.includes(id)){
+    document.querySelector('.nav-item[data-nav="insurance"]').classList.add('on');
+    document.querySelector('.nav-sub-item[data-nav="'+id+'"]').classList.add('on');
+    sub.classList.add('open');arrow.classList.add('open');
+  }else{
+    document.querySelector('.nav-item[data-nav="'+id+'"]').classList.add('on');
+    if(id==='insurance'){
+      if(isParent){sub.classList.toggle('open');arrow.classList.toggle('open');}
+      else{sub.classList.add('open');arrow.classList.add('open');}
+    }else{
+      sub.classList.remove('open');arrow.classList.remove('open');
+    }
+  }
   const m=meta[id];
   document.getElementById('mhTitle').textContent=m.title;
   document.getElementById('mhSub').textContent=m.sub;
@@ -498,6 +741,25 @@ function calcPb(){
   const sal=parseFloat(document.getElementById('pb-sal').value);if(!sal)return;
   const m80=+(sal*0.8).toFixed(2);const mw=city==='km'?2270:2120;const actual=Math.max(m80,mw);
   document.getElementById('pb-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">约定工资80%</div><div style="font-size:16px;font-weight:700">${m80.toLocaleString()}元</div></div><div><div style="font-size:11px;color:#64748b">最低工资</div><div style="font-size:16px;font-weight:700">${mw.toLocaleString()}元</div></div></div><div style="text-align:center;margin-top:10px;padding:10px;background:#cffafe;border-radius:8px"><div style="font-size:12px;color:#64748b">试用期工资不得低于</div><div style="font-size:22px;font-weight:800;color:#0891b2">${actual.toLocaleString()}元/月</div></div></div>`;
+}
+
+function calcPen(){
+  const yr=parseFloat(document.getElementById('pen-yr').value);const idx=parseFloat(document.getElementById('pen-idx').value);const acct=parseFloat(document.getElementById('pen-acct').value);const mo=parseInt(document.getElementById('pen-age').value);
+  if(!yr||!idx||!acct){document.getElementById('pen-r').innerHTML='<p style="color:#dc2626">请填写年限、指数和个人账户额</p>';return}
+  const base=8183;
+  const p1=(base+base*idx)/2*yr*0.01;
+  const p2=acct/mo;
+  const total=p1+p2;
+  document.getElementById('pen-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">基础养老金</div><div style="font-size:16px;font-weight:700;color:#1d4ed8">${p1.toFixed(0)}元</div></div><div><div style="font-size:11px;color:#64748b">个人账户养老金</div><div style="font-size:16px;font-weight:700;color:#be185d">${p2.toFixed(0)}元</div></div><div><div style="font-size:11px;color:#64748b">预估合计</div><div style="font-size:20px;font-weight:800;color:#059669">${total.toFixed(0)}元/月</div></div></div><div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">按云南2024年度计发基数8,183元测算，仅供参考；实际以退休时计发基数及账户计息为准</div></div>`;
+}
+
+function calcHf(){
+  const amt=parseFloat(document.getElementById('hf-amt').value);const yr=parseFloat(document.getElementById('hf-yr').value);const rate=parseFloat(document.getElementById('hf-rate').value);
+  if(!amt||!yr||amt<=0||yr<=0)return;
+  const P=amt*10000;const r=rate/100/12;const n=yr*12;
+  const m=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const total=m*n;const interest=total-P;
+  document.getElementById('hf-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">月供</div><div style="font-size:20px;font-weight:800;color:#1d4ed8">${Math.round(m).toLocaleString()}元</div></div><div><div style="font-size:11px;color:#64748b">还款总额</div><div style="font-size:16px;font-weight:700">${Math.round(total).toLocaleString()}元</div></div><div><div style="font-size:11px;color:#64748b">利息总额</div><div style="font-size:16px;font-weight:700;color:#d97706">${Math.round(interest).toLocaleString()}元</div></div></div><div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">等额本息·共${n}期</div></div>`;
 }
 
 document.querySelectorAll('input[type=number]').forEach(i=>i.addEventListener('keypress',e=>{if(e.key==='Enter'){const b=i.closest('.calc').querySelector('.btn');if(b)b.click()}}));
