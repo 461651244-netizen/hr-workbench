@@ -111,6 +111,8 @@ tr:hover td{background:#f8fafc}
 .sc-card.law-card{cursor:pointer;transition:.15s;border-color:#bfdbfe}
 .sc-card.law-card:hover{border-color:var(--pri);background:#eff6ff;transform:translateY(-1px);box-shadow:0 3px 10px rgba(37,99,235,.14)}
 .sc-card.law-card::after{content:'点击查看全文';display:block;font-size:10px;color:var(--pri);margin-top:8px;text-align:right}
+.law-link{color:var(--pri-d);cursor:pointer;border-bottom:1px dashed var(--pri);font-weight:600}
+.law-link:hover{color:var(--pri);border-bottom-style:solid;background:#eff6ff;border-radius:3px}
 
 /* ===== 响应式 ===== */
 @media(max-width:768px){
@@ -268,7 +270,7 @@ tr:hover td{background:#f8fafc}
 <div class="panel" id="pn-medical">
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#cffafe">&#127973;</div>职工医保 vs 居民医保 · 住院待遇对比</div>
 <div style="overflow-x:auto"><table><thead><tr><th style="text-align:left">项目</th><th>职工(在职)</th><th>职工(退休)</th><th>居民医保</th></tr></thead><tbody>
-<tr><td style="text-align:left;font-weight:600">起付线(一/二/三级)</td><td colspan="2">200 / 550 / 880 元</td><td>200 / 550 / 880 元</td></tr>
+<tr><td style="text-align:left;font-weight:600"><span data-law="hospitalTier">起付线(一/二/三级)</span></td><td colspan="2">200 / 550 / 880 元</td><td>200 / 550 / 880 元</td></tr>
 <tr><td style="text-align:left;font-weight:600">报销比例(一级)</td><td><span class="tg te">91%</span></td><td><span class="tg tf">95%</span></td><td><span class="tg tw">85%</span></td></tr>
 <tr><td style="text-align:left;font-weight:600">报销比例(二级)</td><td><span class="tg te">88%</span></td><td><span class="tg tf">92%</span></td><td><span class="tg tw">75%</span></td></tr>
 <tr><td style="text-align:left;font-weight:600">报销比例(三级)</td><td><span class="tg te">85%</span></td><td><span class="tg tf">89%</span></td><td><span class="tg tw">60%</span></td></tr>
@@ -279,7 +281,7 @@ tr:hover td{background:#f8fafc}
 
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128138;</div>普通门诊待遇</div>
 <table><thead><tr><th style="text-align:left">项目</th><th>职工医保（在职/退休）</th><th>居民医保</th></tr></thead><tbody>
-<tr><td style="text-align:left;font-weight:600">起付线</td><td>一级20 / 二级40 / 三级60 元</td><td>无（县域内定点机构）</td></tr>
+<tr><td style="text-align:left;font-weight:600"><span data-law="hospitalTier">起付线</span></td><td>一级20 / 二级40 / 三级60 元</td><td>无（县域内定点机构）</td></tr>
 <tr><td style="text-align:left;font-weight:600">报销比例</td><td>一级60/70% · 二级55/65% · 三级50/60%</td><td>一级及以下50% · 二三级25%</td></tr>
 <tr><td style="text-align:left;font-weight:600">年度限额</td><td>6,000元（超出按住院待遇）</td><td>400元</td></tr>
 </tbody></table>
@@ -291,7 +293,7 @@ tr:hover td{background:#f8fafc}
 <tr><td style="text-align:left;font-weight:600">特殊病(肾衰/重精)</td><td>无起付线，报<span class="tg tf">90%</span></td><td>无起付线，报<span class="tg tf">90%</span></td></tr>
 <tr><td style="text-align:left;font-weight:600">特殊病(其他)<br><span style="font-size:10px;color:#94a3b8">恶性肿瘤、器官移植等</span></td><td>按住院待遇，起付880元<br>(与住院分别计算)</td><td>起付1,200元，报<span class="tg te">70%</span></td></tr>
 </tbody></table></div>
-<div class="note"><b>办理：</b>持二级及以上医院诊断证明，到医院医保窗口或政务大厅办理备案，即时办结。多病种每增1个加1,000元限额。职工慢性病由统筹基金单独支付，不与年度限额合并。</div></div>
+<div class="note"><b>办理：</b>持二级及以上医院诊断证明，到医院医保窗口或政务大厅办理备案，即时办结。多病种每增1个加1,000元限额。职工慢性病由统筹基金单独支付，不与年度限额合并。<b><span data-law="hospitalTier">什么是起付线、一级/二级/三级医院？点击了解</span></b></div></div>
 
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
 <div class="sc-grid">
@@ -802,6 +804,7 @@ ynMedical105:{t:'云医保〔2023〕105号 · 门诊特殊病病种调整',c:`<s
 crossRegion:{t:'异地就医直接结算政策',c:`<span class="art">备案方式</span>通过「国家医保服务平台」APP、国家异地就医备案微信小程序，或参保地医保经办窗口办理异地就医备案，备案后可在备案地联网定点医疗机构直接结算。<span class="art">报销规则</span>异地就医直接结算原则上执行「就医地目录、参保地政策」：药品、诊疗项目、医疗服务设施标准按就医地规定执行；起付线、封顶线、报销比例等按参保地规定执行。<span class="art">注意事项</span>·未备案自行跨省就医的，报销比例可能降低或不予直接结算，具体以参保地规定为准；·急诊抢救人员视同已备案；·跨省分娩等无法直接结算的，可保留票据回参保地手工报销。<div class="src">国家医保局 · 《关于进一步做好基本医疗保险跨省异地就医直接结算工作的通知》</div>`},
 ynStableJob:{t:'云南省失业保险援企稳岗政策',c:`<span class="art">阶段性降低费率</span>失业保险总费率1%（单位0.7%+个人0.3%），阶段性降费政策延续执行（2026年继续实施，具体截止时间以国家和省最新文件为准）。<span class="art">稳岗返还</span>参保企业上年度未裁员或裁员率不高于上年度全国城镇调查失业率控制目标的，可申请失业保险稳岗返还：大型企业按不超过企业及其职工上年度实际缴纳失业保险费的30%、中小微企业按不超过60%返还。政策实施期限以当年度省人社厅、财政厅、税务局联合通知为准。<span class="art">技能提升补贴</span>参加失业保险并缴费的企业职工，取得职业资格证书或职业技能等级证书的，可按规定申领技能提升补贴。<div class="src">云南省人力资源和社会保障厅等三部门失业保险援企稳岗政策通知 · 以最新年度文件为准</div>`},
 taxExempt:{t:'高温津贴个税优惠规定',c:`<span class="art">免税依据</span>按照国家统一规定发给的补贴、津贴免纳个人所得税。高温津贴属于按国家统一规定发放的津贴补贴范畴，免征个人所得税。<span class="art">政策要点</span>·企业以现金形式按月发放的高温津贴，不计入工资薪金所得计征个人所得税；·发放的绿豆、白糖、清凉饮料等防暑降温物品属于集体福利，同样不属于工资薪金性质的补贴津贴；·高温津贴应与工资分别列示或在工资清单中单独注明，便于税务处理。<div class="src">《中华人民共和国个人所得税法》第四条 · 国税发〔2004〕118号《关于个人所得税有关政策问题的通知》</div>`},
+hospitalTier:{t:'起付线与医院等级说明（医保报销必读）',c:`<span class="art">一、什么是起付线？</span>起付线是医保统筹基金开始支付前的<b>「门槛费」</b>——每次住院，参保人须先自行承担起付线标准以内的费用，政策范围内费用<b>超过起付线的部分</b>才按报销比例由医保基金支付。与起付线对应的是<b>封顶线</b>（年度最高支付限额），即医保基金一个年度内最多支付的上限。<span class="art">二、医院等级是怎么划分的？</span>·<b>一级医疗机构</b>：住院床位100张以下，直接为社区提供医疗预防服务的基层医院，如乡镇卫生院、社区卫生服务中心（站）；·<b>二级医疗机构</b>：床位101~500张，向多个社区提供综合医疗卫生服务的地区性医院，如县（区）人民医院；·<b>三级医疗机构</b>：床位500张以上，面向全省乃至全国范围提供高水平专科性医疗服务的医院，如昆医大附一院、云南省第一人民医院、延安医院等。<span class="art">三、为什么级别越高报销越少？</span>医保通过差异化起付线（一级200元&lt;二级550元&lt;三级880元）和报销比例（以职工在职为例：一级91%&gt;二级88%&gt;三级85%）引导<b>分级诊疗</b>：常见病、慢性病优先在基层就诊（报销多、门槛低），疑难重症再转诊大医院，既节省个人支出也优化医疗资源配置。<span class="art">四、报销计算示例</span>在职职工在三级医院住院，政策范围内费用10,000元：起付线880元先自己承担，剩余9,120元按85%报销，医保支付7,752元，个人实际负担约2,248元（10,000-7,752）。若同样费用在一级医院：起付200元，(10,000-200)×91%=8,918元报销，个人仅负担约1,082元——差距明显。<span class="art">五、实用提示</span>·同一年度内多次住院，部分地区起付线会逐次降低（以参保地规定为准）；·慢特病门诊、特殊病门诊的起付线与住院起付线分别计算；·跨省异地就医备案后直接结算，起付线、报销比例仍按参保地（云南）政策执行；·医保目录外的自费药品、耗材不纳入报销计算。<div class="src">依据：云南省及昆明市基本医疗保险待遇相关规定 · 医院等级划分依据《医院分级管理办法》</div>`},
 personalPension:{t:'个人养老金制度（养老保险第三支柱）',c:`<span class="art">制度定位</span>政府政策支持、个人自愿参加、市场化运营、实现养老保险补充功能的制度，与基本养老保险（第一支柱）、企业年金和职业年金（第二支柱）相衔接。<span class="art">参加范围</span>在中国境内参加城镇职工或者城乡居民基本养老保险的劳动者，均可参加个人养老金制度。<span class="art">缴费与账户</span>参加人每年缴纳个人养老金的上限为<b>12,000元</b>，可按月、分次或者按年度缴费。缴费完全由参加人个人承担，实行个人账户制，缴费额度按自然年度累计计算。<span class="art">投资与领取</span>账户资金可自主选择购买符合规定的储蓄存款、理财产品、商业养老保险、公募基金等金融产品。参加人达到领取基本养老金年龄、完全丧失劳动能力、出国（境）定居等情形时，可以按月、分次或者一次性领取个人养老金，领取方式一经确定不得更改。<span class="art">税收优惠</span>缴费环节按12,000元/年的限额标准在综合所得或经营所得中据实扣除；投资环节计入个人养老金资金账户的投资收益暂不征税；领取环节单独按照3%的税率缴纳个人所得税。<div class="src">《关于推动个人养老金发展的意见》（国办发〔2022〕7号）· 2024年12月15日起全国全面实施</div>`}
 };
 const LAW_MAP={
@@ -838,6 +841,11 @@ document.querySelectorAll('.sc-card').forEach(c=>{
   const h=c.querySelector('h4');if(!h)return;
   const k=LAW_MAP[h.textContent.trim()];
   if(k){c.classList.add('law-card');c.addEventListener('click',()=>showLaw(k))}
+});
+document.querySelectorAll('[data-law]').forEach(el=>{
+  el.classList.add('law-link');
+  el.title='点击查看说明';
+  el.addEventListener('click',e=>{e.stopPropagation();showLaw(el.dataset.law)});
 });
 
 document.querySelectorAll('input[type=number]').forEach(i=>i.addEventListener('keypress',e=>{if(e.key==='Enter'){const b=i.closest('.calc').querySelector('.btn');if(b)b.click()}}));
