@@ -165,7 +165,7 @@ tr:hover td{background:#f8fafc}
   <div class="nav-item" data-nav="overtime" onclick="go('overtime')"><div class="ico" style="background:rgba(217,119,6,.2)">&#9200;</div><span class="ni-txt">加班与调休</span></div>
   <div class="nav-item" data-nav="probation" onclick="go('probation')"><div class="ico" style="background:rgba(8,145,178,.2)">&#128203;</div><span class="ni-txt">试用期</span></div>
 </div>
-<div class="sidebar-ft">数据更新: 2026-09-14<br>每日自动检查政策更新</div>
+<div class="sidebar-ft">数据更新: 2026-09-16<br>每日自动检查政策更新</div>
 </aside>
 
 <!-- ===== 右侧内容区 ===== -->
@@ -241,7 +241,7 @@ tr:hover td{background:#f8fafc}
 <div class="sc-card"><h4>个人账户养老金</h4><div class="formula">个人账户储存额÷计发月数</div><p>计发月数：50岁195、55岁170、60岁139个月</p></div>
 <div class="sc-card"><h4>过渡性养老金</h4><div class="formula">基数×视同指数×视同年限×过渡系数</div><p>仅1995年底前有视同缴费年限（含军龄）人员适用</p></div>
 </div>
-<div class="note info"><b>计发基数：</b>云南2024年度计发基数为8,183元/月，2025年度基数公布前新退休人员暂按上年基数预发、后补差。<b>多缴多得：</b>年限越长、基数越高，养老金越高。</div></div>
+<div class="note info"><b>计发基数：</b>云南2025年度计发基数为8,265元/月（2025年9月省人社厅公布），2026年度基数公布前新退休人员暂按上年基数预发、后补差。<b>多缴多得：</b>年限越长、基数越高，养老金越高。</div></div>
 
 <div class="sec"><div class="calc"><div class="calc-t">&#129518; 养老金测算器（仅供参考）</div>
 <div class="calc-in"><label>缴费年限：</label><input type="number" id="pen-yr" placeholder="如 30" style="width:70px">年
@@ -621,7 +621,7 @@ tr:hover td{background:#f8fafc}
 
 <div class="ft">
 <p>数据来源：云南省人力资源和社会保障厅·昆明市/玉溪市住房公积金管理中心·劳动合同法</p>
-<p>每日自动检查政策更新·仅供参考·最后校验：<span id="lc">2026-09-14</span></p>
+<p>每日自动检查政策更新·仅供参考·最后校验：<span id="lc">2026-09-16</span></p>
 </div>
 </div>
 </div><!-- /main -->
@@ -764,11 +764,11 @@ function calcPb(){
 function calcPen(){
   const yr=parseFloat(document.getElementById('pen-yr').value);const idx=parseFloat(document.getElementById('pen-idx').value);const acct=parseFloat(document.getElementById('pen-acct').value);const mo=parseInt(document.getElementById('pen-age').value);
   if(!yr||!idx||!acct){document.getElementById('pen-r').innerHTML='<p style="color:#dc2626">请填写年限、指数和个人账户额</p>';return}
-  const base=8183;
+  const base=8265;
   const p1=(base+base*idx)/2*yr*0.01;
   const p2=acct/mo;
   const total=p1+p2;
-  document.getElementById('pen-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">基础养老金</div><div style="font-size:16px;font-weight:700;color:#1d4ed8">${p1.toFixed(0)}元</div></div><div><div style="font-size:11px;color:#64748b">个人账户养老金</div><div style="font-size:16px;font-weight:700;color:#be185d">${p2.toFixed(0)}元</div></div><div><div style="font-size:11px;color:#64748b">预估合计</div><div style="font-size:20px;font-weight:800;color:#059669">${total.toFixed(0)}元/月</div></div></div><div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">按云南2024年度计发基数8,183元测算，仅供参考；实际以退休时计发基数及账户计息为准</div></div>`;
+  document.getElementById('pen-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">基础养老金</div><div style="font-size:16px;font-weight:700;color:#1d4ed8">${p1.toFixed(0)}元</div></div><div><div style="font-size:11px;color:#64748b">个人账户养老金</div><div style="font-size:16px;font-weight:700;color:#be185d">${p2.toFixed(0)}元</div></div><div><div style="font-size:11px;color:#64748b">预估合计</div><div style="font-size:20px;font-weight:800;color:#059669">${total.toFixed(0)}元/月</div></div></div><div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">按云南2025年度计发基数8,265元测算，仅供参考；实际以退休时计发基数及账户计息为准</div></div>`;
 }
 
 function calcHf(){
