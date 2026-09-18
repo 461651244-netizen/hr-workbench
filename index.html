@@ -218,7 +218,8 @@ tr:hover td{background:#f8fafc}
 <div class="note info"><b>说明：</b>社保缴费基数执行<b>全省统一</b>标准（2026年度基准7,339元/月），但各州市实际平均工资有差异。昆明工资水平高于全省平均，玉溪接近全省均值。<b>最低工资依据：</b>云人社发〔2026〕9号（2026年9月1日起执行：一类2,270/二类2,120/三类1,970元，小时工资22/21/20元）</div></div>
 
 <div class="sec"><div class="calc"><div class="calc-t">&#129518; 五险一金缴费计算器</div>
-<div class="calc-in"><label>月工资：</label><input type="number" id="ins-sal" placeholder="如 6000"><button class="btn" onclick="calcIns()">计算</button></div>
+<div class="calc-in"><label>月工资：</label><input type="number" id="ins-sal" placeholder="如 6000"><label style="margin-left:10px">公积金比例：</label><select id="ins-rate" style="padding:8px 6px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font-size:13px"><option value="5">5%</option><option value="6">6%</option><option value="7">7%</option><option value="8">8%</option><option value="9">9%</option><option value="10">10%</option><option value="11">11%</option><option value="12" selected>12%</option></select><button class="btn" onclick="calcIns()">计算</button></div>
+<div style="font-size:11px;color:#94a3b8;margin-top:6px">单位与个人公积金缴存比例须一致，可在5%~12%之间选择（依据《住房公积金管理条例》）</div>
 <div id="ins-r"></div></div></div>
 
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
@@ -709,8 +710,9 @@ function calcIns(){
   const rows=[['养老保险',0.16,0.08,b],['医疗保险(含生育)',0.09,0.02,b],['大病医疗互助',0,0,0,44.03,1],['失业保险',0.007,0.003,b],['工伤(四类)',0.009,0,b]];
   let h='<table><thead><tr><th style="text-align:left">险种</th><th>单位</th><th>个人</th></tr></thead><tbody>';let te=0,tp=0;
   rows.forEach(r=>{const e=r[4]!==undefined?r[4]:+(b*r[1]).toFixed(2);const p=r[5]!==undefined?r[5]:+(b*r[2]).toFixed(2);te+=e;tp+=p;h+=`<tr><td style="text-align:left">${r[0]}</td><td>${e.toFixed(2)}</td><td>${p?p.toFixed(2):'-'}</td></tr>`});
-  const fe=+(fb*0.12).toFixed(2),fp=+(fb*0.12).toFixed(2);te+=fe;tp+=fp;
-  h+=`<tr><td style="text-align:left">公积金(12%)</td><td>${fe.toFixed(2)}</td><td>${fp.toFixed(2)}</td></tr>`;
+  const rate=parseFloat(document.getElementById('ins-rate').value)||12;
+  const fe=+(fb*rate/100).toFixed(2),fp=+(fb*rate/100).toFixed(2);te+=fe;tp+=fp;
+  h+=`<tr><td style="text-align:left">公积金(${rate}%)</td><td>${fe.toFixed(2)}</td><td>${fp.toFixed(2)}</td></tr>`;
   h+=`<tr class="tot"><td style="text-align:left">合计</td><td>${te.toFixed(2)}</td><td>${tp.toFixed(2)}</td></tr></tbody></table>`;
   h+=`<div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div style="background:#f0f9ff;border-radius:8px;padding:8px"><div style="font-size:11px;color:#64748b">单位总成本</div><div style="font-size:18px;font-weight:800;color:#1d4ed8">${te.toFixed(0)}</div></div><div style="background:#fce7f3;border-radius:8px;padding:8px"><div style="font-size:11px;color:#64748b">个人扣款</div><div style="font-size:18px;font-weight:800;color:#be185d">${tp.toFixed(0)}</div></div><div style="background:#f0fdf4;border-radius:8px;padding:8px"><div style="font-size:11px;color:#64748b">到手工资</div><div style="font-size:18px;font-weight:800;color:#059669">${(s-tp).toFixed(0)}</div></div></div>`;
   document.getElementById('ins-r').innerHTML=h;
