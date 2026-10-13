@@ -776,22 +776,22 @@ function calcPen2(){
   acct=acct*Math.pow(1+gr,n);
   let fut=0;for(let k=1;k<=n;k++){fut+=sal*Math.pow(1+gr,k)*0.08*12*Math.pow(1+gr,n-k)}
   acct+=fut;
-  const PM={50:195,51:190,52:185,53:180,54:175,55:170,56:164,57:158,58:152,59:145,60:139,61:132,62:125,63:117,64:109,65:101};
-  const pm=PM[Math.round(ra)]||139;
+  const pm=PEN_PM[Math.round(ra)]||139;
   const per=acct/pm;
   const tot=jb+per;
   const rep=tot/(sal*Math.pow(1+gr,n))*100;
-  el.innerHTML=`<div style="padding:14px;background:#f8fafc;border-radius:10px;margin-top:8px">
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin-bottom:12px">
-  <div><div style="font-size:11px;color:#64748b">退休时间</div><div style="font-size:15px;font-weight:700">${ry}年·${ra.toFixed(1)}岁</div></div>
-  <div><div style="font-size:11px;color:#64748b">总缴费年限</div><div style="font-size:15px;font-weight:700">${totalY.toFixed(1)}年</div></div>
-  <div><div style="font-size:11px;color:#64748b">退休时计发基数</div><div style="font-size:15px;font-weight:700">${Math.round(baseR).toLocaleString()}元</div></div>
-  <div><div style="font-size:11px;color:#64748b">缴费指数</div><div style="font-size:15px;font-weight:700">${idx.toFixed(2)}</div></div></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
-  <div style="background:#f0f9ff;border-radius:8px;padding:10px"><div style="font-size:11px;color:#64748b">基础养老金</div><div style="font-size:18px;font-weight:800;color:#1d4ed8">${Math.round(jb).toLocaleString()}<span style="font-size:11px"> 元/月</span></div></div>
-  <div style="background:#fef3c7;border-radius:8px;padding:10px"><div style="font-size:11px;color:#64748b">个人账户养老金</div><div style="font-size:18px;font-weight:800;color:#b45309">${Math.round(per).toLocaleString()}<span style="font-size:11px"> 元/月</span></div><div style="font-size:10px;color:#94a3b8">账户约${Math.round(acct).toLocaleString()}元÷${pm}个月</div></div>
-  <div style="background:#f0fdf4;border-radius:8px;padding:10px"><div style="font-size:11px;color:#64748b">合计养老金</div><div style="font-size:18px;font-weight:800;color:#059669">${Math.round(tot).toLocaleString()}<span style="font-size:11px"> 元/月</span></div><div style="font-size:10px;color:#94a3b8">替代率约${rep.toFixed(0)}%</div></div></div>
-  <div style="font-size:11px;color:#94a3b8;margin-top:10px">基础养老金=计发基数×(1+缴费指数)÷2×缴费年限×1%；个人账户养老金=账户储存额÷计发月数。账户余额未填写时按月缴费工资8%×已缴年限（含利息折减85%）估算，实际以社保核定为准。</div></div>`;
+  const row=(name,formula,val,color)=>`<div style="display:flex;align-items:baseline;gap:10px;padding:9px 12px;border-radius:8px;background:#f8fafc;margin-top:8px;flex-wrap:wrap"><span style="font-weight:700;min-width:110px;color:${color}">${name}</span><span style="font-size:11.5px;color:#64748b;flex:1;min-width:200px">${formula}</span><span style="font-size:19px;font-weight:800;color:${color};white-space:nowrap">${val.toLocaleString(undefined,{maximumFractionDigits:1})} 元</span></div>`;
+  const info=(name,formula,val)=>`<div style="display:flex;align-items:baseline;gap:10px;padding:8px 12px;border-radius:8px;background:#eff6ff;margin-top:6px;flex-wrap:wrap"><span style="font-weight:700;min-width:110px;color:#0369a1">${name}</span><span style="font-size:11.5px;color:#64748b;flex:1;min-width:200px">${formula}</span><span style="font-size:16px;font-weight:700;color:#0369a1;white-space:nowrap">${val}</span></div>`;
+  el.innerHTML=`
+  ${info('退休时间',`= ${y}年出生·${{m:'男职工',fw:'女干部',fwk:'女工人'}[g]}原法定${oa}岁＋延迟${dm}个月 → ${ry}年退休`,ra.toFixed(1)+'岁')}
+  ${info('总缴费年限',`= 已缴${yrs}年＋剩余${n.toFixed(1)}年`,totalY.toFixed(1)+'年')}
+  ${info('退休时计发基数',`= 8,265×(1+${(gr*100).toFixed(1)}%)^${n.toFixed(0)} `,Math.round(baseR).toLocaleString()+' 元')}
+  ${info('缴费指数',`= ${sal.toLocaleString()}÷8,265（自动计算，下限0.6~上限3）`,idx.toFixed(2))}
+  ${info('退休时账户总额',`= ${acctIn?('当前余额终值 '+Math.round(acctIn*Math.pow(1+gr,n)).toLocaleString()):('按工资8%估算终值 '+Math.round((acct-fut)).toLocaleString())} ＋ 未来缴费积累 ${Math.round(fut).toLocaleString()}`,Math.round(acct).toLocaleString()+' 元')}
+  ${row('基础养老金',`=（${Math.round(baseR).toLocaleString()}+${Math.round(baseR).toLocaleString()}×${idx.toFixed(2)}）÷2×${totalY.toFixed(1)}×1%`,jb,'#1d4ed8')}
+  ${row('个人账户养老金',`= ${Math.round(acct).toLocaleString()}÷${pm}（${ra.toFixed(0)}岁退休计发月数）`,per,'#be185d')}
+  <div style="display:flex;align-items:baseline;gap:10px;padding:10px 12px;border-radius:8px;background:#f0fdf4;margin-top:8px;border:1.5px solid #86efac;flex-wrap:wrap"><span style="font-weight:800;min-width:110px;color:#059669">每月养老金合计</span><span style="font-size:11.5px;color:#64748b;flex:1;min-width:200px">= 基础养老金 ${jb.toFixed(1)} + 个人账户养老金 ${per.toFixed(1)} · 替代率约${rep.toFixed(0)}%</span><span style="font-size:22px;font-weight:800;color:#059669;white-space:nowrap">${tot.toLocaleString(undefined,{maximumFractionDigits:1})} 元/月</span></div>
+  <div style="font-size:11px;color:#94a3b8;margin-top:10px;padding:0 4px">退休年龄按渐进式延迟退休政策由出生年份自动推算（男每4个月+1个月至63岁、女干部至58岁、女工人每2个月+1个月至55岁），计发月数随延迟后年龄自动匹配（如60岁139、63岁117个月）。账户余额未填写时按月缴费工资8%×已缴年限（含利息折减85%）估算。各参数手动直填的精确测算见「五险一金→养老保险」。实际以社保经办机构核定为准。</div>`;
 }
 
 function calcLv(){
