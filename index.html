@@ -252,10 +252,11 @@ tr:hover td{background:#f8fafc}
 <label>距退休年限：</label><input type="number" id="pen-yrn" placeholder="如 20,临近退休填0" style="width:90px">年
 <label>当前月缴费工资：</label><input type="number" id="pen-sal" placeholder="如 6000" style="width:90px">元</div>
 <div class="calc-in"><label>个人账户当前余额：</label><input type="number" id="pen-acct" placeholder="如 140000" style="width:100px">元
-<label>计发月数：</label><select id="pen-age"><option value="139">60岁退休·139个月</option><option value="170">55岁退休·170个月</option><option value="195">50岁退休·195个月</option></select>
+<label>退休年龄：</label><input type="number" id="pen-age" placeholder="如 55" min="50" max="65" style="width:60px">岁
+<span style="font-size:11px;color:#94a3b8" id="pen-pm-hint">计发月数将按年龄自动匹配</span>
 <button class="btn" onclick="calcPen()">测算</button></div>
 <div id="pen-r"></div>
-<div class="note" style="margin-top:12px"><b>参数说明：</b>·<b>计发基数</b>：默认云南省2025年度标准8,265元/月；·<b>基数年均增长率</b>：默认1.5%＝云南近两年年均涨幅（2023年8,023→2024年8,183约+2.0%、2025年8,265约+1.0%），可自行修改；·<b>缴费指数</b>＝本人历年缴费基数÷社平工资（0.6~3，按60%档填0.6、按100%填1.0）；·<b>距退休年限</b>：临近退休填0，则按当前值直接测算；超过0时基数按增长率复利推算至退休年份，个人账户＝当前余额复利终值＋未来缴费积累（月缴费工资×8%×12/年，按同增长率递增计息）；·<b>个人账户当前余额</b>：电子社保卡/云南人社APP可查。1996年前有视同缴费工龄者另有过渡性养老金，本测算未包含。</div></div></div>
+<div class="note" style="margin-top:12px"><b>参数说明：</b>·<b>计发基数</b>：默认云南省2025年度标准8,265元/月；·<b>基数年均增长率</b>：默认1.5%＝云南近两年年均涨幅（2023年8,023→2024年8,183约+2.0%、2025年8,265约+1.0%），可自行修改；·<b>缴费指数</b>＝本人历年缴费基数÷社平工资（0.6~3，按60%档填0.6、按100%填1.0）；·<b>距退休年限</b>：临近退休填0，则按当前值直接测算；超过0时基数按增长率复利推算至退休年份，个人账户＝当前余额复利终值＋未来缴费积累（月缴费工资×8%×12/年，按同增长率递增计息）；·<b>退休年龄</b>：<b>延迟退休后年龄可为51~65岁任意整数</b>（如女工人53岁、女干部57岁、男职工63岁），计发月数按年龄自动匹配（50岁195、53岁180、55岁170、58岁152、60岁139、63岁117…65岁101），弹性提前/延后退休均可测算；·<b>个人账户当前余额</b>：电子社保卡/云南人社APP可查。1996年前有视同缴费工龄者另有过渡性养老金，本测算未包含。</div></div></div>
 
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128269;</div>个人账户与待遇查询渠道</div>
 <div class="sc-grid">
@@ -818,13 +819,24 @@ function calcPb(){
   document.getElementById('pb-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">约定工资80%</div><div style="font-size:16px;font-weight:700">${m80.toLocaleString()}元</div></div><div><div style="font-size:11px;color:#64748b">最低工资</div><div style="font-size:16px;font-weight:700">${mw.toLocaleString()}元</div></div></div><div style="text-align:center;margin-top:10px;padding:10px;background:#cffafe;border-radius:8px"><div style="font-size:12px;color:#64748b">试用期工资不得低于</div><div style="font-size:22px;font-weight:800;color:#0891b2">${actual.toLocaleString()}元/月</div></div></div>`;
 }
 
+const PEN_PM={50:195,51:190,52:185,53:180,54:175,55:170,56:164,57:158,58:152,59:145,60:139,61:132,62:125,63:117,64:109,65:101};
+function penPmHint(){
+  const a=parseInt(document.getElementById('pen-age').value);
+  const el=document.getElementById('pen-pm-hint');
+  el.textContent=PEN_PM[a]?`${a}岁退休 → 计发月数 ${PEN_PM[a]}个月`:'计发月数将按年龄自动匹配(50~65岁)';
+  el.style.color=PEN_PM[a]?'#0369a1':'#94a3b8';
+}
+document.getElementById('pen-age').addEventListener('input',penPmHint);
+
 function calcPen(){
   const base=parseFloat(document.getElementById('pen-base').value);const g=(parseFloat(document.getElementById('pen-g').value)||0)/100;
   const idx=parseFloat(document.getElementById('pen-idx').value);const yr=parseFloat(document.getElementById('pen-yr').value);
   const yrn=parseFloat(document.getElementById('pen-yrn').value)||0;const sal=parseFloat(document.getElementById('pen-sal').value);
-  const acct=parseFloat(document.getElementById('pen-acct').value);const mo=parseInt(document.getElementById('pen-age').value);
+  const acct=parseFloat(document.getElementById('pen-acct').value);const age=parseInt(document.getElementById('pen-age').value);
+  const mo=PEN_PM[age];
   const el=document.getElementById('pen-r');
-  if(!base||!idx||!yr||!acct||!mo){el.innerHTML='<p style="color:#dc2626">请填写完整各项数据</p>';return}
+  if(!base||!idx||!yr||!acct||!age){el.innerHTML='<p style="color:#dc2626">请填写完整各项数据</p>';return}
+  if(!mo){el.innerHTML='<p style="color:#dc2626">退休年龄请填写50~65岁的整数（延迟退休后年龄，如53、57、63岁均可）</p>';return}
   const n=Math.max(0,yrn);
   if(n>0&&!sal){el.innerHTML='<p style="color:#dc2626">距退休年限大于0时，请填写当前月缴费工资（用于计算未来个人账户缴费积累）</p>';return}
   /* 基数推算至退休 */
@@ -845,7 +857,7 @@ function calcPen(){
   }
   const row=(name,formula,val,color)=>`<div style="display:flex;align-items:baseline;gap:10px;padding:9px 12px;border-radius:8px;background:#f8fafc;margin-top:8px;flex-wrap:wrap"><span style="font-weight:700;min-width:110px;color:${color}">${name}</span><span style="font-size:11.5px;color:#64748b;flex:1;min-width:200px">${formula}</span><span style="font-size:19px;font-weight:800;color:${color};white-space:nowrap">${val.toLocaleString(undefined,{maximumFractionDigits:1})} 元</span></div>`;
   h+=row('基础养老金',`=（${Math.round(baseR).toLocaleString()}+${Math.round(baseR).toLocaleString()}×${idx}）÷2×${totalY}×1%`,p1,'#1d4ed8');
-  h+=row('个人账户养老金',`= ${Math.round(acctR).toLocaleString()}÷${mo}`,p2,'#be185d');
+  h+=row('个人账户养老金',`= ${Math.round(acctR).toLocaleString()}÷${mo}（${age}岁退休）`,p2,'#be185d');
   h+=`<div style="display:flex;align-items:baseline;gap:10px;padding:10px 12px;border-radius:8px;background:#f0fdf4;margin-top:8px;border:1.5px solid #86efac;flex-wrap:wrap"><span style="font-weight:800;min-width:110px;color:#059669">每月养老金合计</span><span style="font-size:11.5px;color:#64748b;flex:1;min-width:200px">= 基础养老金 ${p1.toFixed(1)} + 个人账户养老金 ${p2.toFixed(1)}</span><span style="font-size:22px;font-weight:800;color:#059669;white-space:nowrap">${total.toLocaleString(undefined,{maximumFractionDigits:1})} 元/月</span></div>`;
   h+=`<div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">按现行城镇职工基本养老保险公式估算（假设工资增速与账户记账利率同增长率），仅供参考；实际以退休时计发基数及个人账户计息为准</div>`;
   el.innerHTML=h;
