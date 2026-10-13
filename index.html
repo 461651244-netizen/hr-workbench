@@ -244,13 +244,15 @@ tr:hover td{background:#f8fafc}
 </div>
 <div class="note info"><b>计发基数：</b>云南2025年度计发基数为8,265元/月（2025年9月省人社厅公布），2026年度基数公布前新退休人员暂按上年基数预发、后补差。<b>多缴多得：</b>年限越长、基数越高，养老金越高。</div></div>
 
-<div class="sec"><div class="calc"><div class="calc-t">&#129518; 养老金测算器（仅供参考）</div>
-<div class="calc-in"><label>缴费年限：</label><input type="number" id="pen-yr" placeholder="如 30" style="width:70px">年
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 养老金测算器（公式数据均可自行填入）</div>
+<div class="calc-in"><label>养老金计发基数：</label><input type="number" id="pen-base" value="8265" style="width:90px">元
 <label>缴费指数：</label><input type="number" id="pen-idx" value="0.6" step="0.1" min="0.6" max="3" style="width:70px">
-<label>个人账户额：</label><input type="number" id="pen-acct" placeholder="如 80000" style="width:100px">元
-<select id="pen-age"><option value="139">60岁退休</option><option value="170">55岁退休</option><option value="195">50岁退休</option></select>
+<label>缴费年限：</label><input type="number" id="pen-yr" placeholder="如 15" style="width:70px">年</div>
+<div class="calc-in"><label>个人账户储存额：</label><input type="number" id="pen-acct" placeholder="如 49000" style="width:100px">元
+<label>计发月数：</label><select id="pen-age"><option value="139">60岁退休·139个月</option><option value="170">55岁退休·170个月</option><option value="195">50岁退休·195个月</option></select>
 <button class="btn" onclick="calcPen()">测算</button></div>
-<div id="pen-r"></div></div></div>
+<div id="pen-r"></div>
+<div class="note" style="margin-top:12px"><b>参数说明：</b>·<b>计发基数</b>：默认取云南省2025年度标准8,265元/月（可改为最新公布值）；·<b>缴费指数</b>＝本人历年缴费基数÷社平工资（下限0.6~上限3，按60%档缴费填0.6，按100%填1.0）；·<b>缴费年限</b>：含视同缴费年限；·<b>个人账户储存额</b>：可通过电子社保卡/云南人社APP查询；·<b>计发月数</b>：由退休年龄确定。1996年前有视同缴费工龄者另有过渡性养老金，本测算未包含。</div></div></div>
 
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128269;</div>个人账户与待遇查询渠道</div>
 <div class="sc-grid">
@@ -525,16 +527,16 @@ tr:hover td{background:#f8fafc}
 <button class="btn" onclick="calcRet()">查询</button></div>
 <div id="ret-r"></div></div></div>
 
-<div class="sec"><div class="calc"><div class="calc-t">&#129518; 退休养老金测算</div>
-<div class="calc-in"><label>出生年份：</label><input type="number" id="pen-birth" placeholder="如 1985" style="width:90px">
-<select id="pen-gender"><option value="m">男职工</option><option value="fw">女干部</option><option value="fwk">女工人</option></select>
-<label style="margin-left:8px">已缴年限：</label><input type="number" id="pen-years" placeholder="如 10" style="width:70px"><span style="font-size:12px;color:#64748b">年</span>
-<label style="margin-left:8px">月缴费工资：</label><input type="number" id="pen-sal" placeholder="如 6000" style="width:100px"><span style="font-size:12px;color:#64748b">元</span></div>
-<div class="calc-in" style="margin-top:8px"><label>个人账户余额：</label><input type="number" id="pen-acct" placeholder="选填,不填自动估算" style="width:130px"><span style="font-size:12px;color:#64748b">元</span>
-<label style="margin-left:8px">年均增长率：</label><input type="number" id="pen-g" value="2" style="width:60px"><span style="font-size:12px;color:#64748b">%（工资/计发基数增速）</span>
-<button class="btn" onclick="calcPen()">测算</button></div>
-<div style="font-size:11px;color:#94a3b8;margin-top:6px">按现行城镇职工基本养老保险公式估算（基础养老金+个人账户养老金）。计发基数默认取云南省2025年标准8,265元/月，按设定增长率复利推算至退休年份。1996年前有视同缴费工龄者另有过渡性养老金，本测算未包含。</div>
-<div id="pen-r"></div></div></div>
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 退休养老金测算（按退休年份推算）</div>
+<div class="calc-in"><label>出生年份：</label><input type="number" id="pen2-birth" placeholder="如 1985" style="width:90px">
+<select id="pen2-gender"><option value="m">男职工</option><option value="fw">女干部</option><option value="fwk">女工人</option></select>
+<label style="margin-left:8px">已缴年限：</label><input type="number" id="pen2-years" placeholder="如 10" style="width:70px"><span style="font-size:12px;color:#64748b">年</span>
+<label style="margin-left:8px">月缴费工资：</label><input type="number" id="pen2-sal" placeholder="如 6000" style="width:100px"><span style="font-size:12px;color:#64748b">元</span></div>
+<div class="calc-in" style="margin-top:8px"><label>个人账户余额：</label><input type="number" id="pen2-acct" placeholder="选填,不填自动估算" style="width:130px"><span style="font-size:12px;color:#64748b">元</span>
+<label style="margin-left:8px">年均增长率：</label><input type="number" id="pen2-g" value="2" style="width:60px"><span style="font-size:12px;color:#64748b">%（工资/计发基数增速）</span>
+<button class="btn" onclick="calcPen2()">测算</button></div>
+<div style="font-size:11px;color:#94a3b8;margin-top:6px">按现行城镇职工基本养老保险公式估算（基础养老金+个人账户养老金）。计发基数默认取云南省2025年标准8,265元/月，按设定增长率复利推算至退休年份。1996年前有视同缴费工龄者另有过渡性养老金，本测算未包含。各参数直填的精确测算见「五险一金→养老保险」。</div>
+<div id="pen2-r"></div></div></div>
 
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
 <div class="sc-grid">
@@ -750,11 +752,11 @@ function calcRet(){
   document.getElementById('ret-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">原法定退休</div><div style="font-size:16px;font-weight:700">${origY}年(${oa}岁)</div></div><div><div style="font-size:11px;color:#64748b">延迟月数</div><div style="font-size:16px;font-weight:700;color:#d97706">+${dm}个月</div></div><div><div style="font-size:11px;color:#64748b">实际退休</div><div style="font-size:16px;font-weight:700;color:#dc2626">${ay.toFixed(1)}年(${aa.toFixed(1)}岁)</div></div></div><div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">可申请提前最长3年（不早于${origY}年）</div></div>`;
 }
 
-function calcPen(){
-  const y=parseInt(document.getElementById('pen-birth').value);const g=document.getElementById('pen-gender').value;
-  const yrs=parseFloat(document.getElementById('pen-years').value);const sal=parseFloat(document.getElementById('pen-sal').value);
-  const acctIn=parseFloat(document.getElementById('pen-acct').value);const gr=(parseFloat(document.getElementById('pen-g').value)||0)/100;
-  const el=document.getElementById('pen-r');
+function calcPen2(){
+  const y=parseInt(document.getElementById('pen2-birth').value);const g=document.getElementById('pen2-gender').value;
+  const yrs=parseFloat(document.getElementById('pen2-years').value);const sal=parseFloat(document.getElementById('pen2-sal').value);
+  const acctIn=parseFloat(document.getElementById('pen2-acct').value);const gr=(parseFloat(document.getElementById('pen2-g').value)||0)/100;
+  const el=document.getElementById('pen2-r');
   if(!y||y<1940||y>2010){el.innerHTML='<p style="color:#dc2626">请输入有效出生年份</p>';return}
   if(!yrs||yrs<0||!sal||sal<=0){el.innerHTML='<p style="color:#dc2626">请填写已缴年限和月缴费工资</p>';return}
   let oa,ta,iv;if(g==='m'){oa=60;ta=63;iv=4}else if(g==='fw'){oa=55;ta=58;iv=4}else{oa=50;ta=55;iv=2}
@@ -814,13 +816,17 @@ function calcPb(){
 }
 
 function calcPen(){
-  const yr=parseFloat(document.getElementById('pen-yr').value);const idx=parseFloat(document.getElementById('pen-idx').value);const acct=parseFloat(document.getElementById('pen-acct').value);const mo=parseInt(document.getElementById('pen-age').value);
-  if(!yr||!idx||!acct){document.getElementById('pen-r').innerHTML='<p style="color:#dc2626">请填写年限、指数和个人账户额</p>';return}
-  const base=8265;
+  const base=parseFloat(document.getElementById('pen-base').value);const idx=parseFloat(document.getElementById('pen-idx').value);const yr=parseFloat(document.getElementById('pen-yr').value);const acct=parseFloat(document.getElementById('pen-acct').value);const mo=parseInt(document.getElementById('pen-age').value);
+  if(!base||!idx||!yr||!acct||!mo){document.getElementById('pen-r').innerHTML='<p style="color:#dc2626">请填写完整各项数据</p>';return}
   const p1=(base+base*idx)/2*yr*0.01;
   const p2=acct/mo;
   const total=p1+p2;
-  document.getElementById('pen-r').innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div><div style="font-size:11px;color:#64748b">基础养老金</div><div style="font-size:16px;font-weight:700;color:#1d4ed8">${p1.toFixed(0)}元</div></div><div><div style="font-size:11px;color:#64748b">个人账户养老金</div><div style="font-size:16px;font-weight:700;color:#be185d">${p2.toFixed(0)}元</div></div><div><div style="font-size:11px;color:#64748b">预估合计</div><div style="font-size:20px;font-weight:800;color:#059669">${total.toFixed(0)}元/月</div></div></div><div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">按云南2025年度计发基数8,265元测算，仅供参考；实际以退休时计发基数及账户计息为准</div></div>`;
+  const row=(name,formula,val,color)=>`<div style="display:flex;align-items:baseline;gap:10px;padding:9px 12px;border-radius:8px;background:#f8fafc;margin-top:8px;flex-wrap:wrap"><span style="font-weight:700;min-width:110px;color:${color}">${name}</span><span style="font-size:11.5px;color:#64748b;flex:1;min-width:200px">${formula}</span><span style="font-size:19px;font-weight:800;color:${color};white-space:nowrap">${val.toLocaleString(undefined,{maximumFractionDigits:1})} 元</span></div>`;
+  document.getElementById('pen-r').innerHTML=
+    row('基础养老金',`=（${base.toLocaleString()}+${base.toLocaleString()}×${idx}）÷2×${yr}×1%`,p1,'#1d4ed8')+
+    row('个人账户养老金',`= ${acct.toLocaleString()}÷${mo}`,p2,'#be185d')+
+    `<div style="display:flex;align-items:baseline;gap:10px;padding:10px 12px;border-radius:8px;background:#f0fdf4;margin-top:8px;border:1.5px solid #86efac;flex-wrap:wrap"><span style="font-weight:800;min-width:110px;color:#059669">每月养老金合计</span><span style="font-size:11.5px;color:#64748b;flex:1;min-width:200px">= 基础养老金 ${p1.toFixed(1)} + 个人账户养老金 ${p2.toFixed(1)}</span><span style="font-size:22px;font-weight:800;color:#059669;white-space:nowrap">${total.toLocaleString(undefined,{maximumFractionDigits:1})} 元/月</span></div>`+
+    `<div style="text-align:center;font-size:11px;color:#64748b;margin-top:8px">按现行城镇职工基本养老保险公式估算，仅供参考；实际以退休时计发基数及个人账户计息为准</div>`;
 }
 
 function calcHf(){
