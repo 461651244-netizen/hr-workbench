@@ -542,8 +542,30 @@ tr:hover td{background:#f8fafc}
 <div style="font-size:11px;color:#94a3b8;margin-top:6px">按现行城镇职工基本养老保险公式估算（基础养老金+个人账户养老金）。计发基数默认取云南省2025年标准8,265元/月，按设定增长率复利推算至退休年份。1996年前有视同缴费工龄者另有过渡性养老金，本测算未包含。各参数直填的精确测算见「五险一金→养老保险」。</div>
 <div id="pen2-r"></div></div></div>
 
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fee2e2">&#128594;</div>参保人身故待遇（养老金未领完·遗属权益）</div>
+<div class="base-row"><div class="base-item"><div class="bl">丧葬补助金</div><div class="bv">7,784<span class="u"> 元</span></div></div><div class="base-item"><div class="bl">抚恤金(退休人员)</div><div class="bv">9~24<span class="u"> 个月基数</span></div></div><div class="base-item"><div class="bl">个人账户余额</div><div class="bv" style="font-size:15px">可依法继承</div></div><div class="base-item"><div class="bl">当月养老金</div><div class="bv" style="font-size:15px">计发至身故当月</div></div></div>
+<div class="note info"><b>计算基数：</b>云南现行为3,892元/月（2025年度全省城镇居民月人均可支配收入，随年度公布更新）。丧葬补助金＝基数×2≈7,784元；抚恤金＝基数×发放月数（最低9个月约35,028元、最高24个月约93,408元）。<b>依据：</b>人社部发〔2021〕18号《企业职工基本养老保险遗属待遇暂行办法》（2021年9月1日施行）。</div></div>
+
+<div class="sec"><div class="sec-t"><div class="icon" style="background:#fef3c7">&#128220;</div>抚恤金发放月数规则</div>
+<table><thead><tr><th style="text-align:left">人员类别</th><th>缴费年限→发放月数</th></tr></thead><tbody>
+<tr><td style="text-align:left;font-weight:600" rowspan="2">在职身故<br><span style="font-size:10px;color:#94a3b8">含灵活就业个人参保</span></td><td>不满5年：<span class="tg tr">3个月</span> | 满5年不满10年：<span class="tg tw">6个月</span></td></tr>
+<tr><td>满10年≤15年：<span class="tg te">9个月</span> | 15年以上每多缴1年+1个月，30年封顶<span class="tg tf">24个月</span></td></tr>
+<tr><td style="text-align:left;font-weight:600">退休后身故</td><td>按在职规则算出最高月数，<b>每领取1年养老金减1个月</b>，最低保底<span class="tg tf">9个月</span></td></tr>
+</tbody></table>
+<div class="note"><b>个人账户继承：</b>身故时养老保险个人账户余额（个人缴费部分及利息）由法定继承人依法继承，随遗属待遇一并发放。<b>兜底条款：</b>缴费不满5年身故的，遗属待遇总额不超过其个人缴费之和。<b>申领：</b>遗属持死亡证明、社保卡、申请人身份证等到待遇领取地社保经办机构办理（云南可在「云南人社」APP/政务网申办），需主动申请、不自动发放。</div></div>
+
+<div class="sec"><div class="calc"><div class="calc-t">&#129518; 遗属待遇测算</div>
+<div class="calc-in"><label>人员类别：</label><select id="dj-type"><option value="retire">退休人员</option><option value="work">在职人员</option></select>
+<label>累计缴费年限：</label><input type="number" id="dj-yr" placeholder="如 30" style="width:70px">年
+<label>已领养老金年数：</label><input type="number" id="dj-pen" placeholder="退休人员填,如 8" style="width:80px">年
+<label>计算基数：</label><input type="number" id="dj-base" value="3892" style="width:80px">元/月
+<button class="btn" onclick="calcDj()">测算</button></div>
+<div id="dj-r"></div>
+<div class="note" style="margin-top:10px"><b>说明：</b>基数默认取云南现行3,892元/月，可自行修改为最新公布值。个人账户继承余额另计（可查电子社保卡）。</div></div></div>
+
 <div class="sec"><div class="sec-t"><div class="icon" style="background:#e0e7ff">&#128214;</div>政策法规依据</div>
 <div class="sc-grid">
+<div class="sc-card"><h4>遗属待遇暂行办法</h4><p>《企业职工基本养老保险遗属待遇暂行办法》<br>人社部发〔2021〕18号<br>丧葬补助金+抚恤金+个人账户继承<br>2021年9月1日起施行</p></div>
 <div class="sc-card"><h4>全国人大常委会决定</h4><p>《关于实施渐进式延迟法定退休年龄的决定》<br>2024年9月13日通过<br><b>2025年1月1日正式施行</b></p></div>
 <div class="sc-card"><h4>国务院实施办法</h4><p>《国务院关于渐进式延迟法定退休年龄的办法》<br>过渡期15年（2025-2040）<br>最低缴费年限2030年起逐年增至20年</p></div>
 <div class="sc-card"><h4>弹性退休规定</h4><p>可提前最长3年（不低于原法定年龄）<br>协商一致可延迟最长3年<br>不得违背职工意愿强制退休</p></div>
@@ -794,6 +816,33 @@ function calcPen2(){
   <div style="font-size:11px;color:#94a3b8;margin-top:10px;padding:0 4px">退休年龄按渐进式延迟退休政策由出生年份自动推算（男每4个月+1个月至63岁、女干部至58岁、女工人每2个月+1个月至55岁），计发月数随延迟后年龄自动匹配（如60岁139、63岁117个月）。账户余额未填写时按月缴费工资8%×已缴年限（含利息折减85%）估算。各参数手动直填的精确测算见「五险一金→养老保险」。实际以社保经办机构核定为准。</div>`;
 }
 
+function calcDj(){
+  const type=document.getElementById('dj-type').value;const yr=parseFloat(document.getElementById('dj-yr').value);
+  const pen=parseFloat(document.getElementById('dj-pen').value)||0;const base=parseFloat(document.getElementById('dj-base').value);
+  const el=document.getElementById('dj-r');
+  if(!yr||yr<=0||!base){el.innerHTML='<p style="color:#dc2626">请填写缴费年限和计算基数</p>';return}
+  /* 按在职规则算最高月数 */
+  let m;
+  if(yr<5)m=3;else if(yr<10)m=6;else if(yr<=15)m=9;else m=Math.min(9+Math.floor(yr-15),24);
+  let note='';
+  if(type==='retire'){
+    const used=Math.floor(pen);
+    const m2=Math.max(m-used,9);
+    note=`按缴费${yr}年最高${m}个月，已领取${pen}年养老金减${used}个月`;
+    m=m2;
+  }
+  const fz=base*m;
+  const bz=base*2;
+  const total=fz+bz;
+  el.innerHTML=`<div style="padding:12px;background:#f8fafc;border-radius:10px;margin-top:8px">
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center">
+  <div style="background:#f0f9ff;border-radius:8px;padding:10px"><div style="font-size:11px;color:#64748b">丧葬补助金</div><div style="font-size:17px;font-weight:800;color:#1d4ed8">${Math.round(bz).toLocaleString()}<span style="font-size:11px"> 元</span></div><div style="font-size:10px;color:#94a3b8">${base.toLocaleString()}×2个月</div></div>
+  <div style="background:#fef3c7;border-radius:8px;padding:10px"><div style="font-size:11px;color:#64748b">一次性抚恤金</div><div style="font-size:17px;font-weight:800;color:#b45309">${Math.round(fz).toLocaleString()}<span style="font-size:11px"> 元</span></div><div style="font-size:10px;color:#94a3b8">${base.toLocaleString()}×${m}个月</div></div>
+  <div style="background:#f0fdf4;border-radius:8px;padding:10px"><div style="font-size:11px;color:#64748b">合计（账户继承另计）</div><div style="font-size:17px;font-weight:800;color:#059669">${Math.round(total).toLocaleString()}<span style="font-size:11px"> 元</span></div><div style="font-size:10px;color:#94a3b8">${type==='retire'?'退休人员':'在职人员'}</div></div></div>
+  ${note?`<div style="font-size:11px;color:#94a3b8;margin-top:8px;text-align:center">${note}，最低保底9个月</div>`:''}
+  <div style="font-size:11px;color:#94a3b8;margin-top:6px;text-align:center">养老保险个人账户余额可依法继承，随遗属待遇一并发放</div></div>`;
+}
+
 function calcLv(){
   const sal=parseFloat(document.getElementById('lv-sal').value);const day=parseInt(document.getElementById('lv-day').value);
   if(!sal||!day)return;const daily=+(sal/21.75).toFixed(2);const total=+(daily*day*3).toFixed(2);
@@ -896,6 +945,7 @@ ynMedical105:{t:'云医保〔2023〕105号 · 门诊特殊病病种调整',c:`<s
 crossRegion:{t:'异地就医直接结算政策',c:`<span class="art">备案方式</span>通过「国家医保服务平台」APP、国家异地就医备案微信小程序，或参保地医保经办窗口办理异地就医备案，备案后可在备案地联网定点医疗机构直接结算。<span class="art">报销规则</span>异地就医直接结算原则上执行「就医地目录、参保地政策」：药品、诊疗项目、医疗服务设施标准按就医地规定执行；起付线、封顶线、报销比例等按参保地规定执行。<span class="art">注意事项</span>·未备案自行跨省就医的，报销比例可能降低或不予直接结算，具体以参保地规定为准；·急诊抢救人员视同已备案；·跨省分娩等无法直接结算的，可保留票据回参保地手工报销。<div class="src">国家医保局 · 《关于进一步做好基本医疗保险跨省异地就医直接结算工作的通知》</div>`},
 ynStableJob:{t:'云南省失业保险援企稳岗政策',c:`<span class="art">阶段性降低费率</span>失业保险总费率1%（单位0.7%+个人0.3%），阶段性降费政策延续执行（2026年继续实施，具体截止时间以国家和省最新文件为准）。<span class="art">稳岗返还</span>参保企业上年度未裁员或裁员率不高于上年度全国城镇调查失业率控制目标的，可申请失业保险稳岗返还：大型企业按不超过企业及其职工上年度实际缴纳失业保险费的30%、中小微企业按不超过60%返还。政策实施期限以当年度省人社厅、财政厅、税务局联合通知为准。<span class="art">技能提升补贴</span>参加失业保险并缴费的企业职工，取得职业资格证书或职业技能等级证书的，可按规定申领技能提升补贴。<div class="src">云南省人力资源和社会保障厅等三部门失业保险援企稳岗政策通知 · 以最新年度文件为准</div>`},
 taxExempt:{t:'高温津贴个税优惠规定',c:`<span class="art">免税依据</span>按照国家统一规定发给的补贴、津贴免纳个人所得税。高温津贴属于按国家统一规定发放的津贴补贴范畴，免征个人所得税。<span class="art">政策要点</span>·企业以现金形式按月发放的高温津贴，不计入工资薪金所得计征个人所得税；·发放的绿豆、白糖、清凉饮料等防暑降温物品属于集体福利，同样不属于工资薪金性质的补贴津贴；·高温津贴应与工资分别列示或在工资清单中单独注明，便于税务处理。<div class="src">《中华人民共和国个人所得税法》第四条 · 国税发〔2004〕118号《关于个人所得税有关政策问题的通知》</div>`},
+deceasedPay:{t:'《企业职工基本养老保险遗属待遇暂行办法》全文',c:`<span class="art">第一条</span>为保障企业职工基本养老保险参保人员及其遗属的合法权益，依据社会保险法有关规定，制定本办法。<span class="art">第二条（适用情形）</span>参加企业职工基本养老保险的人员（包括在职人员和退休人员，以下简称参保人员）因病或非因工死亡的，其遗属可以领取丧葬补助金和抚恤金（合称遗属待遇）。<span class="art">第三条（资金来源）</span>遗属待遇为一次性待遇，所需资金从企业职工基本养老保险统筹基金中列支。<span class="art">第四条（丧葬补助金）</span>丧葬补助金的标准，按照参保人员死亡时本省（自治区、直辖市）上一年度城镇居民月人均可支配收入的2倍计算。<span class="art">第五条（抚恤金）</span>抚恤金标准按以下办法确定：（一）在职人员（含灵活就业等以个人身份参保人员），以死亡时本省上一年度城镇居民月人均可支配收入为基数，根据本人的缴费年限（包括实际缴费年限和视同缴费年限）确定发放月数。缴费年限不满5年的，发放月数为3个月；缴费年限满5年不满10年的，发放月数为6个月；缴费年限满10年不超过15年（含15年）的，发放月数为9个月；缴费年限15年以上的，每多缴费1年，发放月数增加1个月。缴费年限30年以上的，按照30年计算，发放月数最高为24个月。（二）退休人员（含退职人员），以死亡时本省上一年度城镇居民月人均可支配收入为基数，根据本人在职时的缴费年限确定最高发放月数（计算方法与在职人员相同），每领取1年基本养老金减少1个月，发放月数最低为9个月。本条所述缴费年限和领取基本养老金时间计算到月。<span class="art">第六条（兜底条款）</span>参保人员因病或非因工死亡，累计缴费年限不足5年的，其遗属待遇标准不得超过其个人缴费之和（灵活就业等以个人身份参保人员以记入个人账户部分计算）。<span class="art">第七条（领取地）</span>在职参保人员死亡的遗属待遇领取地为其最后养老保险关系所在地（含临时基本养老保险缴费账户所在地）。退休人员死亡的遗属待遇领取地为其企业职工基本养老保险待遇领取地。<span class="art">第八条（不可重复享受）</span>参保人员因病或非因工死亡，同时符合企业职工基本养老保险、城乡居民基本养老保险遗属待遇条件的，由其遗属选择其中一种领取。已办理制度衔接手续并领取城乡居民基本养老保险待遇后死亡的，其遗属不再享受企业职工基本养老保险遗属待遇。<span class="art">第九条（宣告死亡）</span>参保人员因下落不明被人民法院宣告死亡的，以人民法院宣告的死亡日期作为其死亡时间，其遗属可以领取遗属待遇。被宣告死亡参保人员再次出现的，已领取的遗属待遇应予退还。<span class="art">第十条</span>本办法自2021年9月1日起施行。<span class="art">个人账户继承（相关规定）</span>职工或退休人员死亡，个人账户中的个人缴费部分（含利息）可以依法继承，余额随遗属待遇一并发放。<div class="src">人社部发〔2021〕18号 · 人力资源社会保障部、财政部 · 2021年9月1日起施行</div>`},
 hospitalTier:{t:'起付线与医院等级说明（医保报销必读）',c:`<span class="art">一、什么是起付线？</span>起付线是医保统筹基金开始支付前的<b>「门槛费」</b>——每次住院，参保人须先自行承担起付线标准以内的费用，政策范围内费用<b>超过起付线的部分</b>才按报销比例由医保基金支付。与起付线对应的是<b>封顶线</b>（年度最高支付限额），即医保基金一个年度内最多支付的上限。<span class="art">二、医院等级是怎么划分的？</span>·<b>一级医疗机构</b>：住院床位100张以下，直接为社区提供医疗预防服务的基层医院，如乡镇卫生院、社区卫生服务中心（站）；·<b>二级医疗机构</b>：床位101~500张，向多个社区提供综合医疗卫生服务的地区性医院，如县（区）人民医院；·<b>三级医疗机构</b>：床位500张以上，面向全省乃至全国范围提供高水平专科性医疗服务的医院，如昆医大附一院、云南省第一人民医院、延安医院等。<span class="art">三、为什么级别越高报销越少？</span>医保通过差异化起付线（一级200元&lt;二级550元&lt;三级880元）和报销比例（以职工在职为例：一级91%&gt;二级88%&gt;三级85%）引导<b>分级诊疗</b>：常见病、慢性病优先在基层就诊（报销多、门槛低），疑难重症再转诊大医院，既节省个人支出也优化医疗资源配置。<span class="art">四、报销计算示例</span>在职职工在三级医院住院，政策范围内费用10,000元：起付线880元先自己承担，剩余9,120元按85%报销，医保支付7,752元，个人实际负担约2,248元（10,000-7,752）。若同样费用在一级医院：起付200元，(10,000-200)×91%=8,918元报销，个人仅负担约1,082元——差距明显。<span class="art">五、实用提示</span>·同一年度内多次住院，部分地区起付线会逐次降低（以参保地规定为准）；·慢特病门诊、特殊病门诊的起付线与住院起付线分别计算；·跨省异地就医备案后直接结算，起付线、报销比例仍按参保地（云南）政策执行；·医保目录外的自费药品、耗材不纳入报销计算。<div class="src">依据：云南省及昆明市基本医疗保险待遇相关规定 · 医院等级划分依据《医院分级管理办法》</div>`},
 personalPension:{t:'个人养老金制度（养老保险第三支柱）',c:`<span class="art">制度定位</span>政府政策支持、个人自愿参加、市场化运营、实现养老保险补充功能的制度，与基本养老保险（第一支柱）、企业年金和职业年金（第二支柱）相衔接。<span class="art">参加范围</span>在中国境内参加城镇职工或者城乡居民基本养老保险的劳动者，均可参加个人养老金制度。<span class="art">缴费与账户</span>参加人每年缴纳个人养老金的上限为<b>12,000元</b>，可按月、分次或者按年度缴费。缴费完全由参加人个人承担，实行个人账户制，缴费额度按自然年度累计计算。<span class="art">投资与领取</span>账户资金可自主选择购买符合规定的储蓄存款、理财产品、商业养老保险、公募基金等金融产品。参加人达到领取基本养老金年龄、完全丧失劳动能力、出国（境）定居等情形时，可以按月、分次或者一次性领取个人养老金，领取方式一经确定不得更改。<span class="art">税收优惠</span>缴费环节按12,000元/年的限额标准在综合所得或经营所得中据实扣除；投资环节计入个人养老金资金账户的投资收益暂不征税；领取环节单独按照3%的税率缴纳个人所得税。<div class="src">《关于推动个人养老金发展的意见》（国办发〔2022〕7号）· 2024年12月15日起全国全面实施</div>`}
 };
@@ -914,6 +964,7 @@ const LAW_MAP={
 '失业保险条例':'unempReg','云南稳岗政策':'ynStableJob','个税优惠':'taxExempt',
 '昆明贷款新政':'kmFundLoan','商转公/组合贷':'kmFundLoan',
 '职工医保门诊共济':'clinicShare','云医保〔2023〕105号':'ynMedical105','异地就医':'crossRegion',
+'遗属待遇暂行办法':'deceasedPay',
 '个人养老金（第三支柱）':'personalPension'
 };
 function showLaw(k){
